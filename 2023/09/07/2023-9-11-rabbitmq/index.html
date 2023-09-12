@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="John Doe"><meta name="renderer" content="webkit"><meta name="copyright" content="John Doe"><meta name="keywords" content="Hexo"><meta name="description" content=""><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Den's RabbitMQ學習筆記 · Coding Camp in Wei-Ting's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 6.3.0"></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/img/assets/me2.JPG"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">Wei Ting</div><div class="profile-signature">Walk step by step</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Wei-Ting's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Den's RabbitMQ學習筆記</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2023-09-07</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="backend"> backend</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">1.2k</span> | Reading time: <span class="post-count">4</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="前言（preface）："><a href="#前言（preface）：" class="headerlink" title="前言（preface）："></a>前言（preface）：</h1><p>本篇是記錄在學習RabbitMQ的過程與經驗，會介紹RabbitMQ的概念、實作方式、以及一些常見Bug解法。如果有錯請大哥指點QQ</p>
+<h1 id="概念（Concepts）："><a href="#概念（Concepts）：" class="headerlink" title="概念（Concepts）："></a>概念（Concepts）：</h1><p>RabbitMQ本質是一個 <strong>Queue</strong>，但專門用於訊息發送接收的一種**<em>訊息代理軟體</em>**<br>，就像是Nginx 代理Http&#x2F;Https請求的概念，他專門代理發送者傳出的訊息，也因此能做到傳送訊息雙方的「**<em>解耦</em><strong>」，因為發送方只需將訊息交給RabbitMQ而不需去知道哪個應用程式要使用到<br>RabbitMQ的競爭者有Kafaka、RocketMQ、ActiveMQ<br>而他比較獨特的點就是支援AMQP這樣的訊息傳遞協議 在NodeJS中就有提供</strong><em>amqplib</em>** 這樣的library </p>
+<ul>
+<li>amqplib 是 RabbitMQ 的官方 Node.js 客戶端庫，它提供了兩種不同的API風格：Promise-based API 和 Callback-based API。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> amqp = <span class="built_in">require</span>(<span class="string">&#x27;amqplib&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> amqp = <span class="built_in">require</span>(<span class="string">&#x27;amqplib/callback_api&#x27;</span>);</span><br></pre></td></tr></table></figure>
+我在實作時是使用Promise-based API，一樣的Async語法就能實作啦～～</li>
+</ul>
+<h3 id="在RabbitMQ的世界中主要分成3個角色"><a href="#在RabbitMQ的世界中主要分成3個角色" class="headerlink" title="在RabbitMQ的世界中主要分成3個角色"></a>在RabbitMQ的世界中主要分成3個角色</h3><ol>
+<li><strong>生產者 Producer：</strong>負責insert 訊息到Queue 中</li>
+<li><strong>佇列 Queue：</strong>負責暫存訊息</li>
+<li><strong>消費者 Consumer：</strong>負責消化掉特定Queue中的訊息</li>
+</ol>
+<div style="width: 80%;"><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/intro-2.png" width="20%" height="20%"></div>
+
+<h1 id="對RabbitMQ其中幾個mode的學習筆記："><a href="#對RabbitMQ其中幾個mode的學習筆記：" class="headerlink" title="對RabbitMQ其中幾個mode的學習筆記："></a>對RabbitMQ其中幾個mode的學習筆記：</h1><ol>
+<li><strong><em>Direct mode（point-to-point）：</em></strong><br>最基本也最簡單的模式也是我實作的方式:D，一個Producer 負責發送訊息至Queue ,<br>一個 Consumer 去那唯一的Queue 中吃掉訊息</li>
+</ol>
+<div style="width: 80%;"><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/point.png" width="20%" height="20%"></div>
+
+
+
+<ol start="2">
+<li><strong><em>Work mode：</em></strong><br>這個模式是由一個Producer 產生訊息到唯一的Queue中，但是由多個Consumer 共同消耗那一個Queue裡的訊息<br>欸？那如果把Consumer想成是server，queue 想成是大量的請求，不覺得很像load balancer的概念嗎XD<br>沒錯 利用這個模式可以做到酷似load balancer的功用讓複雜的服務應用進一步提升程式效能 酷八! 可是沒辦法像真正的load balancer有完整的負載平衡畢竟RabbitMQ本來就不是一個Load balancer的產品 XD</li>
+</ol>
+<div style="width: 80%;"><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/work.png" width="20%" height="20%"></div>
+
+<ol start="3">
+<li><strong><em>Publish&#x2F;Subscribe mode：</em></strong><br>這個模式不像前面兩個那麼直接好懂了，現在Producer不是直接將訊息丟進Queue中，而是將訊息交「Exchange」，可以先把Exchange想成一個管理員 而他有三種處理訊息的方式<blockquote>
+<ol>
+<li>direct （將訊息附加上一把新鑰匙）</li>
+<li>fanout（將訊息附上會員限制）</li>
+<li>topic（將訊息附上一把多功能鑰匙）</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<p>而在 Publish&#x2F;Subscribe 模式中，使用的是 Exchange 的 fanout type<br>這時他就像一個掌握很多不同機密資訊的偵探，你想要資訊那你必須要給他$$ XD，而這一段腦補中的你就是指Queue，$$則代表你必須訂閱Subscribe偵探才能夠獲取資料，在直白點，Exchange只會把訊息丟進那些訂閱他的Queue中～～</p>
+<div style="width: 80%;"><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/pub.png" width="20%" height="20%"></div>
+
+<h1 id="實作方式："><a href="#實作方式：" class="headerlink" title="實作方式："></a>實作方式：</h1><p>實作的環境是NodeJS，而RabbitMQ是用Docker包住的。<br>使用Promise-based API</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> amqp = <span class="built_in">require</span>(<span class="string">&#x27;amqplib&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>連線方面其實很簡單：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> connection = <span class="keyword">await</span> amqp.<span class="title function_">connect</span>(<span class="string">`amqp://<span class="subst">$&#123;process.env.RABBITMQ_DEFAULT_USER&#125;</span>:<span class="subst">$&#123;process.env.RABBITMQ_DEFAULT_PASS&#125;</span>@rabbitmq:5672`</span>);</span><br><span class="line"><span class="keyword">const</span> channel = <span class="keyword">await</span> connection.<span class="title function_">createChannel</span>();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>連線好後便可以建立Queue啦～<br>durable代表你想不想持久化你的message</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> channel.<span class="title function_">assertQueue</span>(queue, &#123; <span class="attr">durable</span>: <span class="literal">false</span> &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>將message enqueue<br>記得必須將message字串化</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> message = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(mailOptions);</span><br><span class="line">channel.<span class="title function_">sendToQueue</span>(queue, <span class="title class_">Buffer</span>.<span class="title function_">from</span>(message));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消化message：<br>此處我的做法是用於消化掉message的當下將這個message包成email並透過NodeJS的nodemailer發出去</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">channel.<span class="title function_">consume</span>(queue, <span class="keyword">async</span> (msg) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(msg.<span class="property">content</span>.<span class="title function_">toString</span>());</span><br><span class="line">  <span class="keyword">const</span> mailOptions = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(msg.<span class="property">content</span>.<span class="title function_">toString</span>());</span><br><span class="line">  <span class="keyword">await</span> <span class="variable language_">module</span>.<span class="property">exports</span>.<span class="title function_">sendMail</span>(mailOptions)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Email sent:&#x27;</span>, mailOptions.<span class="property">to</span>);</span><br><span class="line">      channel.<span class="title function_">ack</span>(msg); <span class="comment">// 確認訊息已處理</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Error sending email:&#x27;</span>, error);</span><br><span class="line">      channel.<span class="title function_">reject</span>(msg, <span class="literal">false</span>); <span class="comment">// 拒絕訊息並不再重新排程</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>有了以上關鍵步驟其實就可以做到最簡單的RabbitMQ訊息代理啦！</p>
+</li>
+</ul>
+<h1 id="我遇到哪些Bug-如何解決？"><a href="#我遇到哪些Bug-如何解決？" class="headerlink" title="我遇到哪些Bug,如何解決？"></a>我遇到哪些Bug,如何解決？</h1><p><code>Error: connect ECONNREFUSED X.X.X.X:5672at TCPConnectWrap.afterConnect [as oncomplete] </code><br>—&gt; 確保連線時的帳密、端口一致且rabbitmq-server IP (container name)正確後還是錯的話可以去嘗試給rabbitmq server 更多時間準備連線（用loop搭配setTimeOut去不斷要求失敗重連直到成功 像極了苦澀的人生@@）</p>
+<p>接著可能會遇到<code>ETIMEDOUT</code>的問題，老實說我不確定我怎麼解的但似乎手動重啟rabbit-server後就可以了（別放棄任何可能性@@ Just try it !）</p>
+<p><strong><em>如果沒有用的話可以嘗試從這些問題檢查起：</em></strong></p>
+<blockquote>
+<ol>
+<li>Docker-compose.yml設置有問題 ex: rabbitmq跟應用程式是否在同個網路下、帳號密碼是否與連接時一致</li>
+<li>安全群組有無開啟5672,15672的端口</li>
+<li>連線準備時間足夠？（超大的坑）</li>
+<li>Nginx&#x2F;防火牆的設置是否影響？</li>
+</ol>
+</blockquote>
+<p><strong>THANKS WATCHING</strong></p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://example.com">Wei-ting</a></p><p> <span>Link:  </span><a href="http://example.com/2023/09/07/2023-9-11-rabbitmq/">http://example.com/2023/09/07/2023-9-11-rabbitmq/</a></p><p> <span>Copyright:  </span><span>All articles in this blog are licensed under <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/3.0">CC BY-NC-SA 3.0</a> unless stating additionally.</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/2023/09/07/2023-9-07-canchu/" title="Canchu (social media)"><span>< PreviousPost</span><br><span class="prevTitle">Canchu (social media)</span></a><div class="clear"></div></div><div id="comment"><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'http://example.com/2023/09/07/2023-9-11-rabbitmq/';
+  this.page.identifier = '/2023/09/07/2023-9-11-rabbitmq/';
+  this.page.title = 'Den's RabbitMQ學習筆記';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'https-lu-weiting-github-io' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a target="_blank" rel="noopener" href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80%EF%BC%88preface%EF%BC%89%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">前言（preface）：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5%EF%BC%88Concepts%EF%BC%89%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">概念（Concepts）：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8RabbitMQ%E7%9A%84%E4%B8%96%E7%95%8C%E4%B8%AD%E4%B8%BB%E8%A6%81%E5%88%86%E6%88%903%E5%80%8B%E8%A7%92%E8%89%B2"><span class="toc-number">2.0.1.</span> <span class="toc-text">在RabbitMQ的世界中主要分成3個角色</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%8DRabbitMQ%E5%85%B6%E4%B8%AD%E5%B9%BE%E5%80%8Bmode%E7%9A%84%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">對RabbitMQ其中幾個mode的學習筆記：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%A6%E4%BD%9C%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">實作方式：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%88%91%E9%81%87%E5%88%B0%E5%93%AA%E4%BA%9BBug-%E5%A6%82%E4%BD%95%E8%A7%A3%E6%B1%BA%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">我遇到哪些Bug,如何解決？</span></a></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
