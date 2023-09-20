@@ -99,7 +99,7 @@
   i.fa.fa-comment
   .saying--><div class="cxo-profile-inner"><div class="profile-name">Wei Ting</div><div class="profile-signature">Walk step by step</div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Wei-Ting's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Soon Solve</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2023-09-14</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="side project"> side project</a><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="backend"> backend</a></span></div><div class="post-intro-read"><span> Word count: <span class="post-count">1.3k</span> | Reading time: <span class="post-count">5</span>min</span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><div class="video-container"><iframe src="https://www.youtube.com/embed/yGbiN2ny9YY" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
 
-<h2 id="前言（preface）："><a href="#前言（preface）：" class="headerlink" title="前言（preface）："></a>前言（preface）：</h2><p>這篇文會分享Soon Solve這個side project的<strong>開發技術、功能介紹以及學習心得!</strong><br>但因為本人負責後端開發所以開發技術的分享著重在後端的介紹！<br>前端的學習紀錄可以參考我的夥伴筆記：</p>
+<h2 id="前言（preface）："><a href="#前言（preface）：" class="headerlink" title="前言（preface）："></a>前言（preface）：</h2><p>這篇文會分享Soon Solve這個side project的<strong>開發技術、功能介紹以及學習心得!</strong><br>但因為本人負責後端開發所以開發技術的分享著重在後端的介紹！<br>前端的學習紀錄可以參考我的夥伴筆記</p>
 <h2 id="Soon-Solve-基本介紹："><a href="#Soon-Solve-基本介紹：" class="headerlink" title="Soon Solve 基本介紹："></a>Soon Solve 基本介紹：</h2><p>Soon Solve的開發夥伴總共5位是以前後端分離的方式進行開發，後端包含我是3人，前端為2人，開發時間為<strong>兩週</strong>，透過設計思考的概念我們在一開始就不花多少時間便定好了Soon Solve的Core Value：<strong>順路(便)經濟</strong><br>而主要理念是讓大學生在校園中可以透過此應用程式將自己<strong>瑣碎的時間</strong>轉變為對自己而言<strong>更有價值的寶物</strong>同時促進整體<strong>校園環境</strong>變得更加和諧</p>
 <p>系統開發完整性在6,7成，目前主要限制在台大校園裡的建築為任務地點作為指標，來不及開發出完整的map系統</p>
 <p>其中我覺得最為有趣的是在某些功能上我們似乎存在滿有料的隱藏性價值XD</p>
@@ -117,7 +117,8 @@
 <p>CI&#x2F;CD自動化測試與部署：<em>Github Action</em></p>
 <p>Version Control：<em>Git</em></p>
 </blockquote>
-<h2 id="系統架構圖（backend）："><a href="#系統架構圖（backend）：" class="headerlink" title="系統架構圖（backend）："></a>系統架構圖（backend）：</h2><div style="width: 30%;"><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/system.png" width="20%" height="20%"></div>
+<h2 id="系統架構圖（backend）："><a href="#系統架構圖（backend）：" class="headerlink" title="系統架構圖（backend）："></a>系統架構圖（backend）：</h2><p><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/system.png" alt="system"></p>
+<!-- <div style="width: 30%;"><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/system.png" width="20%" height="20%"></div> -->
 
 <h2 id="功能介紹（Feature-Introduction）："><a href="#功能介紹（Feature-Introduction）：" class="headerlink" title="功能介紹（Feature Introduction）："></a>功能介紹（Feature Introduction）：</h2><blockquote>
 <p><strong><em>註冊登入 (Signup&#x2F;in)：</em></strong></p>
@@ -210,9 +211,10 @@
 <ol>
 <li>每個人有自己的coding習慣與用法該如何建立良好溝通來有效率的做到統一</li>
 <li>時間緊湊開發效率不如預期該如何改善</li>
-<li>解Git conflict經驗<br>在這協作開發過程中，對Git版控又多了更深一層的理解跟熟悉，還有在「清楚闡述自己的想法」這塊也是提升的滿有感的。<br>我覺還滿有趣的經驗是，在一開始我們構想好系統功能時實作起來感覺應該會滿簡單的，但是後來發現很多細節的部分都沒有考量進去於是我們又花了一大把時間腦袋風暴一波XD</li>
+<li>解Git conflict經驗</li>
 </ol>
 </blockquote>
+<p>在這協作開發過程中，對Git版控又多了更深一層的理解跟熟悉，還有在「清楚闡述自己的想法」這塊也是提升的滿有感的。<br>我覺還滿有趣的經驗是，在一開始我們構想好系統功能時實作起來感覺應該會滿簡單的，但是後來發現很多細節的部分都沒有考量進去於是我們又花了一大把時間腦袋風暴一波XD </p>
 <p>而我的開發內容是部分的API以及Socket.io實作聊天室,RabbitMQ實作email訊息通知，API開發其實還挺無聊的，我覺得最有趣的idea就是篩選器的實作了吧，也是我前面說的隱藏價值XD，如果你有看Demo影片你應該就可以知道主界面可以透過篩選器篩出你有興趣的任務，而我們的篩選器有性別，如果你正缺一個正當的理由靠近某個異性促進關係的話，Damn，這不就有了嗎:b</p>
 <p><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/par.jpg" alt="partner"></p>
 <p>ps RabbitMQ不包含兩週裡後來才新增進去的嘿嘿</p>
