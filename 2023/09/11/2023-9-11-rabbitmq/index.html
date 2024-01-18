@@ -14,19 +14,33 @@
   
 
   
-  <title>Wei-Ting&#39;s Blog</title>
+  <title>Den&#39;s RabbitMQ學習筆記 | Wei-Ting&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Wei-Ting&#39;s Blog">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="前言（preface）：本篇是記錄在學習RabbitMQ的過程與經驗，會介紹RabbitMQ的概念、實作方式、以及一些常見Bug解法。如果有錯請大哥指點QQ 概念（Concepts）：RabbitMQ本質是一個 Queue，但專門用於訊息發送接收的一種訊息代理軟體，就像是Nginx 代理Http&#x2F;Https請求的概念，他專門代理發送者傳出的訊息，也因此能做到傳送訊息雙方的「解耦」，因為發">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Den&#39;s RabbitMQ學習筆記">
+<meta property="og:url" content="http://example.com/2023/09/11/2023-9-11-rabbitmq/index.html">
 <meta property="og:site_name" content="Wei-Ting&#39;s Blog">
+<meta property="og:description" content="前言（preface）：本篇是記錄在學習RabbitMQ的過程與經驗，會介紹RabbitMQ的概念、實作方式、以及一些常見Bug解法。如果有錯請大哥指點QQ 概念（Concepts）：RabbitMQ本質是一個 Queue，但專門用於訊息發送接收的一種訊息代理軟體，就像是Nginx 代理Http&#x2F;Https請求的概念，他專門代理發送者傳出的訊息，也因此能做到傳送訊息雙方的「解耦」，因為發">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/intro-2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/intro-2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/point.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/point.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/work.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/work.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/pub.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/pub.png">
+<meta property="article:published_time" content="2023-09-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-18T14:10:13.911Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="backend">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/intro-2.png">
   
     <link rel="alternate" href="/atom.xml" title="Wei-Ting's Blog" type="application/atom+xml">
   
@@ -50,7 +64,7 @@
   
    
   <div id="main-grid" class="  ">
-    <div id="nav" class=" is_home "  >
+    <div id="nav" class=""  >
       <navbar id="navbar">
   <nav id="title-nav">
     <a href="/">
@@ -243,256 +257,12 @@
 </sidebar>
     </div>
     <div id="content-body">
-      
-   
-
-
-<article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-   
-  <div class="article-inner">
-    <div class="article-main">
-      <header class="article-header">
-        
-<div class="main-title-bar">
-  <div class="main-title-dot"></div>
-  
-    
-      <h1 itemprop="name">
-        <a class="p-name article-title" href="/2024/01/18/hello-world/">Hello World</a>
-      </h1>
-    
-  
-</div>
-
-        <div class='meta-info-bar'>
-          <div class="meta-info">
-  <time class="dt-published" datetime="2024-01-18T12:18:23.951Z" itemprop="datePublished">2024-01-18</time>
-</div>
-          <div class="need-seperator meta-info">
-            <div class="meta-cate-flex">
-  
-  <a class="meta-cate-link" href="/categories/AppWorks-School-Campus-Summer-Project/">AppWorks School Campus Summer Project</a>><a class="meta-cate-link" href="/categories/AppWorks-School-Campus-Summer-Project/side-project/">side project</a>><a class="meta-cate-link" href="/categories/AppWorks-School-Campus-Summer-Project/side-project/backend/">backend</a>
-   
-</div>
-  
-          </div>
-          <div class="wordcount need-seperator meta-info">
-            367 words 
-          </div>
-        </div>
-        
-      </header>
-      <div class="e-content article-entry" itemprop="articleBody">
-        
-          <div class="truncate-text">
-            
-              
-Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;
-
-More info: Writing
-Run server1$ hexo server
-
-More info: Server
-Generate static files1$ hexo generate
-
-More info: Generating
-Deploy to remote sites1$ hexo deploy
-
-More info: Deployment
-
-            
-          </div>
-        
-      </div>
-
-         
-    </div>
-    
-     
-    <a class="right-panel  non-pic  "
-      
-      href="/2024/01/18/hello-world/" 
-    >
        
-      <i class="fa-solid fa-angle-right non-pic"></i>
-       
-    </a>
-     
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-   
-
-
-<article id="post-2023-9-25-cache" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-   
-  <div class="article-inner">
-    <div class="article-main">
-      <header class="article-header">
-        
-<div class="main-title-bar">
-  <div class="main-title-dot"></div>
-  
-    
-      <h1 itemprop="name">
-        <a class="p-name article-title" href="/2023/09/25/2023-9-25-cache/">Den&#39;s cache學習筆記</a>
-      </h1>
-    
-  
-</div>
-
-        <div class='meta-info-bar'>
-          <div class="meta-info">
-  <time class="dt-published" datetime="2023-09-24T16:00:00.000Z" itemprop="datePublished">2023-09-25</time>
-</div>
-          <div class="need-seperator meta-info">
-            <div class="meta-cate-flex">
-  
-    Uncategorized 
-   
-</div>
-  
-          </div>
-          <div class="wordcount need-seperator meta-info">
-            2k words 
-          </div>
-        </div>
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li></ul>
-
-      </header>
-      <div class="e-content article-entry" itemprop="articleBody">
-        
-          <div class="truncate-text">
-            
-              前言（preface）：本篇是記錄學習cache缓存策略的筆記，如果有錯請大哥指點QQ
-基本快取概念（Concepts）：為了減輕Database的壓力以及提升系統效能，原理就是將可重複使用的資料存在記憶體中，這樣就能免去每次都需要跑去資料庫拿取又或是重新經過複雜計算的動作，類似於殺雞焉用牛刀。
-快取的策略、模式Cache Aside滿簡單又常見的一個，讀策略就是cache有就拿沒有就去資料庫拿拿完再放入cache，寫策略則是先更新完資料庫後刪除於快取的舊資料可以注意的點是，此策略下是由應用程式負責與快取、資料庫做互動，快取系統只被作為一個暫存資料的容器。
-應用情境：不適合寫多的情形，假設a發出讀取請求且未命中緩存的當下近乎同時b發出寫入請求，儘管資料庫是最新的資料但a有極大的機率拿到髒資料，原因是因為寫策略並沒有更新到緩存，所以通常遇到寫多的情形時會選擇其他策略又或是將緩存過期時間設置極短
-優點：易實現、不容易產生緩存併發問題、讀多的情況下有極高的效能（廢話因為就是讀取時會更新緩存XD）、資料庫負擔小
-最大的缺點大概就是當資料寫入變多時資料一致性會越來越低吧
-以下是一些我覺得好...
-            
-          </div>
-        
-      </div>
-
-         
-    </div>
-    
-     
-    <a class="right-panel  non-pic  "
-      
-      href="/2023/09/25/2023-9-25-cache/" 
-    >
-       
-      <i class="fa-solid fa-angle-right non-pic"></i>
-       
-    </a>
-     
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-   
-
-
-<article id="post-2023-9-14-soon_solve" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-   
-  <div class="article-inner">
-    <div class="article-main">
-      <header class="article-header">
-        
-<div class="main-title-bar">
-  <div class="main-title-dot"></div>
-  
-    
-      <h1 itemprop="name">
-        <a class="p-name article-title" href="/2023/09/14/2023-9-14-soon_solve/">Soon Solve</a>
-      </h1>
-    
-  
-</div>
-
-        <div class='meta-info-bar'>
-          <div class="meta-info">
-  <time class="dt-published" datetime="2023-09-13T16:00:00.000Z" itemprop="datePublished">2023-09-14</time>
-</div>
-          <div class="need-seperator meta-info">
-            <div class="meta-cate-flex">
-  
-    Uncategorized 
-   
-</div>
-  
-          </div>
-          <div class="wordcount need-seperator meta-info">
-            3k words 
-          </div>
-        </div>
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/side-project/" rel="tag">side project</a></li></ul>
-
-      </header>
-      <div class="e-content article-entry" itemprop="articleBody">
-        
-          <div class="truncate-text">
-            
-              
-
-
-前言（preface）：這篇文會分享Soon Solve這個side project的開發技術、功能介紹以及學習心得!但因為本人負責後端開發所以開發技術的分享著重在後端的介紹！前端的學習紀錄可以參考我的夥伴筆記
-Soon Solve 基本介紹：Soon Solve的開發夥伴總共5位是以前後端分離的方式進行開發，後端包含我是3人，前端為2人，開發時間為兩週，透過設計思考的概念我們在一開始就不花多少時間便定好了Soon Solve的Core Value：順路(便)經濟而主要理念是讓大學生在校園中可以透過此應用程式將自己瑣碎的時間轉變為對自己而言更有價值的寶物同時促進整體校園環境變得更加和諧
-系統開發完整性在6,7成，目前主要限制在台大校園裡的建築為任務地點作為指標，來不及開發出完整的map系統
-其中我覺得最為有趣的是在某些功能上我們似乎存在滿有料的隱藏性價值XD
-開發語言、環境與框架（Programming Languages, Environment, and Frameworks）：
-後端 (Back-end)： JavaScript、Node.js、Express、MyS...
-            
-          </div>
-        
-      </div>
-
-         
-    </div>
-    
-     
-    <a class="right-panel  non-pic  "
-      
-      href="/2023/09/14/2023-9-14-soon_solve/" 
-    >
-       
-      <i class="fa-solid fa-angle-right non-pic"></i>
-       
-    </a>
-     
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-   
 
 
 <article id="post-2023-9-11-rabbitmq" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
    
   <div class="article-inner">
     <div class="article-main">
@@ -502,8 +272,8 @@ Soon Solve 基本介紹：Soon Solve的開發夥伴總共5位是以前後端分�
   <div class="main-title-dot"></div>
   
     
-      <h1 itemprop="name">
-        <a class="p-name article-title" href="/2023/09/11/2023-9-11-rabbitmq/">Den&#39;s RabbitMQ學習筆記</a>
+      <h1 class="p-name article-title" itemprop="headline name">
+        Den&#39;s RabbitMQ學習筆記
       </h1>
     
   
@@ -531,14 +301,78 @@ Soon Solve 基本介紹：Soon Solve的開發夥伴總共5位是以前後端分�
       </header>
       <div class="e-content article-entry" itemprop="articleBody">
         
-          <div class="truncate-text">
-            
-              前言（preface）：本篇是記錄在學習RabbitMQ的過程與經驗，會介紹RabbitMQ的概念、實作方式、以及一些常見Bug解法。如果有錯請大哥指點QQ
-概念（Concepts）：RabbitMQ本質是一個 Queue，但專門用於訊息發送接收的一種訊息代理軟體，就像是Nginx 代理Http&#x2F;Https請求的概念，他專門代理發送者傳出的訊息，也因此能做到傳送訊息雙方的「解耦」，因為發送方只需將訊息交給RabbitMQ而不需去知道哪個應用程式要使用到RabbitMQ的競爭者有Kafaka、RocketMQ、ActiveMQ而他比較獨特的點就是支援AMQP這樣的訊息傳遞協議 在NodeJS中就有提供amqplib這樣的library 
+          <h1 id="前言（preface）："><a href="#前言（preface）：" class="headerlink" title="前言（preface）："></a>前言（preface）：</h1><p>本篇是記錄在學習RabbitMQ的過程與經驗，會介紹RabbitMQ的概念、實作方式、以及一些常見Bug解法。如果有錯請大哥指點QQ</p>
+<h1 id="概念（Concepts）："><a href="#概念（Concepts）：" class="headerlink" title="概念（Concepts）："></a>概念（Concepts）：</h1><p>RabbitMQ本質是一個 <strong>Queue</strong>，但專門用於訊息發送接收的一種<strong>訊息代理軟體</strong><br>，就像是Nginx 代理Http&#x2F;Https請求的概念，他專門代理發送者傳出的訊息，也因此能做到傳送訊息雙方的「<strong>解耦</strong>」，因為發送方只需將訊息交給RabbitMQ而不需去知道哪個應用程式要使用到<br>RabbitMQ的競爭者有Kafaka、RocketMQ、ActiveMQ<br>而他比較獨特的點就是支援AMQP這樣的訊息傳遞協議 在NodeJS中就有提供<strong>amqplib</strong>這樣的library </p>
+<ul>
+<li>amqplib 是 RabbitMQ 的官方 Node.js 客戶端庫，它提供了兩種不同的API風格：Promise-based API 和 Callback-based API。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> amqp = <span class="built_in">require</span>(<span class="string">&#x27;amqplib&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> amqp = <span class="built_in">require</span>(<span class="string">&#x27;amqplib/callback_api&#x27;</span>);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="在RabbitMQ的世界中主要分成3個角色"><a href="#在RabbitMQ的世界中主要分成3個角色" class="headerlink" title="在RabbitMQ的世界中主要分成3個角色"></a>在RabbitMQ的世界中主要分成3個角色</h3><ol>
+<li><strong>生產者 Producer：</strong>負責insert 訊息到Queue 中</li>
+<li><strong>佇列 Queue：</strong>負責暫存訊息</li>
+<li><strong>消費者 Consumer：</strong>負責消化掉特定Queue中的訊息</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/intro-2.png" alt="notification"></p>
+<!-- <div style="width: 80%;"><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/intro-2.png" width="20%" height="20%"></div> -->
 
-amqplib 是 RabbitMQ 的官方 Node.js 客戶端庫，它提供了兩種不同的API風格：Promise-based API 和 Callback-based API。12const amqp = require(&#x27;amqplib&#x27;);const amqp = require(&#x27;amqplib/...
-            
-          </div>
+<h1 id="對RabbitMQ其中幾個mode的學習筆記："><a href="#對RabbitMQ其中幾個mode的學習筆記：" class="headerlink" title="對RabbitMQ其中幾個mode的學習筆記："></a>對RabbitMQ其中幾個mode的學習筆記：</h1><ol>
+<li><strong><em>Direct mode（point-to-point）：</em></strong><br>最基本也最簡單的模式也是我實作的方式:D，一個Producer 負責發送訊息至Queue ,<br>一個 Consumer 去那唯一的Queue 中吃掉訊息</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/point.png" alt="notification"></p>
+<!-- <div style="width: 80%;"><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/point.png" width="20%" height="20%"></div> -->
+
+
+
+<ol start="2">
+<li><strong><em>Work mode：</em></strong><br>這個模式是由一個Producer 產生訊息到唯一的Queue中，但是由多個Consumer 共同消耗那一個Queue裡的訊息<br>欸？那如果把Consumer想成是server，queue 想成是大量的請求，不覺得很像load balancer的概念嗎XD<br>沒錯 利用這個模式可以做到酷似load balancer的功用讓複雜的服務應用進一步提升程式效能 酷八! 可是沒辦法像真正的load balancer有完整的負載平衡畢竟RabbitMQ本來就不是一個Load balancer的產品 XD</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/work.png" alt="notification"></p>
+<!-- <div style="width: 80%;"><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/work.png" width="20%" height="20%"></div> -->
+
+<ol start="3">
+<li><strong><em>Publish&#x2F;Subscribe mode：</em></strong><br>這個模式不像前面兩個那麼直接好懂了，現在Producer不是直接將訊息丟進Queue中，而是將訊息交「Exchange」，可以先把Exchange想成一個管理員 而他有三種處理訊息的方式<blockquote>
+<ol>
+<li>direct （將訊息附加上一把新鑰匙）</li>
+<li>fanout（將訊息附上會員限制）</li>
+<li>topic（將訊息附上一把多功能鑰匙）</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<p>而在 Publish&#x2F;Subscribe 模式中，使用的是 Exchange 的 fanout type<br>這時他就像一個掌握很多不同機密資訊的偵探，你想要資訊那你必須要給他$$ XD，而這一段腦補中的你就是指Queue，$$則代表你必須訂閱Subscribe偵探才能夠獲取資料，在直白點，Exchange只會把訊息丟進那些訂閱他的Queue中～～</p>
+<p><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/pub.png" alt="notification"></p>
+<!-- <div style="width: 80%;"><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/pub.png" width="20%" height="20%"></div> -->
+
+<h1 id="實作方式："><a href="#實作方式：" class="headerlink" title="實作方式："></a>實作方式：</h1><p>實作的環境是NodeJS，而RabbitMQ是用Docker包住的。<br>使用Promise-based API</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> amqp = <span class="built_in">require</span>(<span class="string">&#x27;amqplib&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>連線方面其實很簡單：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> connection = <span class="keyword">await</span> amqp.<span class="title function_">connect</span>(<span class="string">`amqp://<span class="subst">$&#123;process.env.RABBITMQ_DEFAULT_USER&#125;</span>:<span class="subst">$&#123;process.env.RABBITMQ_DEFAULT_PASS&#125;</span>@rabbitmq:5672`</span>);</span><br><span class="line"><span class="keyword">const</span> channel = <span class="keyword">await</span> connection.<span class="title function_">createChannel</span>();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>連線好後便可以建立Queue啦～<br>durable代表你想不想持久化你的message</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> channel.<span class="title function_">assertQueue</span>(queue, &#123; <span class="attr">durable</span>: <span class="literal">false</span> &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>將message enqueue<br>記得必須將message字串化</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> message = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(mailOptions);</span><br><span class="line">channel.<span class="title function_">sendToQueue</span>(queue, <span class="title class_">Buffer</span>.<span class="title function_">from</span>(message));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消化message：<br>此處我的做法是用於消化掉message的當下將這個message包成email並透過NodeJS的nodemailer發出去</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">channel.<span class="title function_">consume</span>(queue, <span class="keyword">async</span> (msg) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(msg.<span class="property">content</span>.<span class="title function_">toString</span>());</span><br><span class="line">  <span class="keyword">const</span> mailOptions = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(msg.<span class="property">content</span>.<span class="title function_">toString</span>());</span><br><span class="line">  <span class="keyword">await</span> <span class="variable language_">module</span>.<span class="property">exports</span>.<span class="title function_">sendMail</span>(mailOptions)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Email sent:&#x27;</span>, mailOptions.<span class="property">to</span>);</span><br><span class="line">      channel.<span class="title function_">ack</span>(msg); <span class="comment">// 確認訊息已處理</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Error sending email:&#x27;</span>, error);</span><br><span class="line">      channel.<span class="title function_">reject</span>(msg, <span class="literal">false</span>); <span class="comment">// 拒絕訊息並不再重新排程</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>有了以上關鍵步驟其實就可以做到最簡單的RabbitMQ訊息代理啦！</p>
+</li>
+</ul>
+<h1 id="我遇到哪些Bug-如何解決？"><a href="#我遇到哪些Bug-如何解決？" class="headerlink" title="我遇到哪些Bug,如何解決？"></a>我遇到哪些Bug,如何解決？</h1><p><code>Error: connect ECONNREFUSED X.X.X.X:5672at TCPConnectWrap.afterConnect [as oncomplete] </code><br>—&gt; 確保連線時的帳密、端口一致且rabbitmq-server IP (container name)正確後還是錯的話可以去嘗試給rabbitmq server 更多時間準備連線（用loop搭配setTimeOut去不斷要求失敗重連直到成功 像極了苦澀的人生@@）</p>
+<p>接著可能會遇到<code>ETIMEDOUT</code>的問題，老實說我不確定我怎麼解的但似乎手動重啟rabbit-server後就可以了（別放棄任何可能性@@ Just try it !）</p>
+<p><strong><em>如果沒有用的話可以嘗試從這些問題檢查起：</em></strong></p>
+<blockquote>
+<ol>
+<li>Docker-compose.yml設置有問題 ex: rabbitmq跟應用程式是否在同個網路下、帳號密碼是否與連接時一致</li>
+<li>安全群組有無開啟5672,15672的端口</li>
+<li>連線準備時間足夠？（超大的坑）</li>
+<li>Nginx&#x2F;防火牆的設置是否影響？</li>
+</ol>
+</blockquote>
+<p><strong>THANKS WATCHING</strong></p>
+
         
       </div>
 
@@ -546,104 +380,40 @@ amqplib 是 RabbitMQ 的官方 Node.js 客戶端庫，它提供了兩種不同�
     </div>
     
      
-    <a class="right-panel  non-pic  "
-      
-      href="/2023/09/11/2023-9-11-rabbitmq/" 
-    >
-       
-      <i class="fa-solid fa-angle-right non-pic"></i>
-       
-    </a>
-     
   </div>
   
-</article>
-
-
-
-
-
-
-
-   
-
-
-<article id="post-2023-9-07-canchu" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-   
-  <div class="article-inner">
-    <div class="article-main">
-      <header class="article-header">
-        
-<div class="main-title-bar">
-  <div class="main-title-dot"></div>
-  
     
-      <h1 itemprop="name">
-        <a class="p-name article-title" href="/2023/09/07/2023-9-07-canchu/">Canchu (social media)</a>
-      </h1>
+<nav id="article-nav">
+  <a class="article-nav-btn left "
     
-  
-</div>
-
-        <div class='meta-info-bar'>
-          <div class="meta-info">
-  <time class="dt-published" datetime="2023-09-06T16:00:00.000Z" itemprop="datePublished">2023-09-07</time>
-</div>
-          <div class="need-seperator meta-info">
-            <div class="meta-cate-flex">
-  
-    Uncategorized 
-   
-</div>
-  
-          </div>
-          <div class="wordcount need-seperator meta-info">
-            3.7k words 
-          </div>
-        </div>
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AppWorks-School-Campus-Summer-Project/" rel="tag">AppWorks School Campus Summer Project</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/side-project/" rel="tag">side project</a></li></ul>
-
-      </header>
-      <div class="e-content article-entry" itemprop="articleBody">
-        
-          <div class="truncate-text">
-            
-              
-
-
-
-前言（preface）：這篇文會分享在實作Canchu這個social media 的心路歷程、相關技術，順便（喔不 是必須要）推一波AppWorks School XD
-This article will share the journey of implementing the social media platform “Canchu,” the relevant technologies involved, and also give a shout-out to AppWorks School.
-開發語言、環境與框架（Programming Languages, Environment, and Frameworks）：
-後端 (Back-end)： JavaScript、Node.js 、Express、MySQL
-雲端服務 (Cloud Service)：Linux(AWS EC2)、AWS RDS、AWS Load Balancer
-容器化工具（Containerization）：Docker
-前端(Front-end)：HTML&#x2F;CSS&#x2...
-            
-          </div>
-        
-      </div>
-
-         
-    </div>
-    
-     
-    <a class="right-panel  non-pic  "
+      href="/2023/09/14/2023-9-14-soon_solve/"
+      title="Soon Solve"
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
       
-      href="/2023/09/07/2023-9-07-canchu/" 
-    >
-       
-      <i class="fa-solid fa-angle-right non-pic"></i>
-       
-    </a>
-     
-  </div>
+        Soon Solve
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/2023/09/07/2023-9-07-canchu/"
+      title="Canchu (social media)"
+     >
+
+    <p class="title-text">
+      
+        Canchu (social media)
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
   
 </article>
-
-
-
 
 
 
