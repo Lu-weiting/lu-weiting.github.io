@@ -34,10 +34,10 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/notification.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/school.jpg">
 <meta property="article:published_time" content="2023-09-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-18T15:08:27.873Z">
+<meta property="article:modified_time" content="2024-01-19T06:47:02.338Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="backend">
-<meta property="article:tag" content="AppWorks School Campus Summer Project">
+<meta property="article:tag" content="AppWorks School">
 <meta property="article:tag" content="side project">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.ytimg.com/vi/wbm1a_0Pnd8/maxresdefault.jpg">
@@ -61,6 +61,102 @@
 <meta name="generator" content="Hexo 7.0.0"></head>
 
 <body>
+  
+     
+<div class="widget color-picker">
+  <h3 class="widget-title">Theme Preview</h3>
+  <div id="banner-toggle-bar">
+    <label for="vehicle1">Show Banner</label><br>
+    <input type="checkbox" id="banner-checkbox" name="banner-checkbox" value="show">
+  </div>
+
+  <div id="preset-list">
+    
+      <div class="preset-btn" style="background-color: #f486aa;" data-hue="0"></div>
+    
+      <div class="preset-btn" style="background-color: #fa8978;" data-hue="30"></div>
+    
+      <div class="preset-btn" style="background-color: #ee9748;" data-hue="60"></div>
+    
+      <div class="preset-btn" style="background-color: #00cab1;" data-hue="180"></div>
+    
+      <div class="preset-btn" style="background-color: #63b3ff;" data-hue="250"></div>
+    
+      <div class="preset-btn" style="background-color: #8ca8ff;" data-hue="270"></div>
+    
+      <div class="preset-btn" style="background-color: #bc98f9;" data-hue="300"></div>
+    
+      <div class="preset-btn" style="background-color: #df8cd8;" data-hue="330"></div>
+    
+      <div class="preset-btn" style="background-color: #ec88c2;" data-hue="345"></div>
+     
+  </div>
+  <input type="range" min="0" max="360" value="250" class="slider" id="colorSlider" step="5" style="width: 100%;">
+  <p class="hue-text">Hue: <span id="hueValue"></span></p>
+  <p class="oklch-tip">You are using an outdated browser that does not support OKLCH colors. The color setting will not take effect.</p>
+</div>
+
+<script>
+  let slider = document.getElementById("colorSlider");
+  let output = document.getElementById("hueValue");
+  let presetList = document.getElementById("preset-list");
+  let r = document.querySelector(':root');
+  output.innerHTML = slider.value; // Display the default slider value
+
+  function getColorNode(l, c, h) {
+    return new Color("oklch", [l, c, h]).to("srgb").toString({format: "hex"});
+  }
+  function setHue(hue) {
+    localStorage.setItem('hue', hue);
+    output.innerHTML = hue;
+    slider.value = hue;
+
+    r.style.setProperty(`--primary-hue`, hue);
+  }
+
+  let storedHue = localStorage.getItem('hue');
+  if (storedHue) {
+    setHue(storedHue);
+  }
+
+  slider.oninput = function() {
+    output.innerHTML = this.value;
+    let hue = this.value;
+    setHue(hue);
+  }
+
+  presetList.onclick = function(event) {
+    let hue = event.target.dataset.hue;
+    if (hue) {
+      setHue(hue);
+    }
+  }
+
+  // Banner switch
+
+  function enableBanner() {
+    r.setAttribute("showBanner", "true");
+    localStorage.setItem('showBanner', "true");
+  }
+  
+  function disableBanner() {
+    r.setAttribute("showBanner", "false");
+    localStorage.setItem('showBanner', "false");
+  }
+
+  let showBannerCheck = document.querySelector("input[name=banner-checkbox]");
+  if (r.getAttribute("showBanner") === "true") {
+    showBannerCheck.checked = true;
+  }
+  showBannerCheck.addEventListener('change', function() {
+    if (this.checked) {
+      enableBanner();
+    } else {
+      disableBanner();
+    }
+  });
+</script>
+  
   
    
   <div id="main-grid" class="  ">
@@ -157,35 +253,13 @@
       
 
 
-  <div class="widget-wrap">
-    <div class="widget">
-      <h3 class="widget-title">Categories</h3>
-      <div class="category-box">
-            <a class="category-link" href="/categories/AppWorks-School-Campus-Summer-Project/">
-                AppWorks School Campus Summer Project
-                <div class="category-count">1</div>
-            </a>
-        <div class="children"><div class="category-box">
-            <a class="category-link" href="/categories/AppWorks-School-Campus-Summer-Project/side-project/">
-                side project
-                <div class="category-count">1</div>
-            </a>
-        <div class="children"><div class="category-box">
-            <a class="category-link" href="/categories/AppWorks-School-Campus-Summer-Project/side-project/backend/">
-                backend
-                <div class="category-count">1</div>
-            </a>
-        </div></div></div></div></div>
-    </div>
-  </div>
-
 
     
       
   <div class="widget-wrap">
     <div class="widget">
       <h3 class="widget-title">Tags</h3>
-      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/AppWorks-School-Campus-Summer-Project/" rel="tag">AppWorks School Campus Summer Project</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/side-project/" rel="tag">side project</a></li></ul>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/AppWorks-School/" rel="tag">AppWorks School</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/side-project/" rel="tag">side project</a></li></ul>
     </div>
   </div>
 
@@ -196,11 +270,6 @@
     <div class="widget">
       <h3 class="widget-title">Archives</h3>
       
-      
-        <a class="archive-link" href="/archives/2024/01 ">
-          January 2024 
-          <div class="archive-count">1 </div>
-        </a>
       
         <a class="archive-link" href="/archives/2023/09 ">
           September 2023 
@@ -217,12 +286,6 @@
     <div class="widget">
       <h3 class="widget-title">Recent Posts</h3>
       <ul>
-        
-          <a class="recent-link" href="/2024/01/18/hello-world/" title="Hello World" >
-            <div class="recent-link-text">
-              Hello World
-            </div>
-          </a>
         
           <a class="recent-link" href="/2023/09/25/2023-9-25-cache/" title="Den's cache學習筆記" >
             <div class="recent-link-text">
@@ -296,7 +359,7 @@
           </div>
         </div>
         
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AppWorks-School-Campus-Summer-Project/" rel="tag">AppWorks School Campus Summer Project</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/side-project/" rel="tag">side project</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AppWorks-School/" rel="tag">AppWorks School</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/side-project/" rel="tag">side project</a></li></ul>
 
       </header>
       <div class="e-content article-entry" itemprop="articleBody">
