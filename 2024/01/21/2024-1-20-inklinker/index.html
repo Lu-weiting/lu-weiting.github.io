@@ -14,19 +14,28 @@
   
 
   
-  <title>Wei-Ting&#39;s Blog</title>
+  <title>InkLinker (Blog platform) | Wei-Ting&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Wei-Ting&#39;s Blog">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="前言（preface）：這是一個以結合Medium、Notion 各自優點為目標的部落格平台，其中核心技術在於編輯器的實作(離線同步恢復、及時保存機制等等)以及運用 ML(Machine Learning)的方式實作推薦演算法，系統開發流程遵循Scrum的敏捷開發方式，是一個為期 3 sprints的全端個人專案且有著高度的**分層架構 (Layered Architecture)**讓整體">
+<meta property="og:type" content="article">
+<meta property="og:title" content="InkLinker (Blog platform)">
+<meta property="og:url" content="http://example.com/2024/01/21/2024-1-20-inklinker/index.html">
 <meta property="og:site_name" content="Wei-Ting&#39;s Blog">
+<meta property="og:description" content="前言（preface）：這是一個以結合Medium、Notion 各自優點為目標的部落格平台，其中核心技術在於編輯器的實作(離線同步恢復、及時保存機制等等)以及運用 ML(Machine Learning)的方式實作推薦演算法，系統開發流程遵循Scrum的敏捷開發方式，是一個為期 3 sprints的全端個人專案且有著高度的**分層架構 (Layered Architecture)**讓整體">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/INK.png">
+<meta property="article:published_time" content="2024-01-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-21T08:57:44.214Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="side project">
+<meta property="article:tag" content="full stack">
+<meta property="article:tag" content="Scrum">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/INK.png">
   
     <link rel="alternate" href="/atom.xml" title="Wei-Ting's Blog" type="application/atom+xml">
   
@@ -146,7 +155,7 @@
   
    
   <div id="main-grid" class="  ">
-    <div id="nav" class=" is_home "  >
+    <div id="nav" class=""  >
       <navbar id="navbar">
   <nav id="title-nav">
     <a href="/">
@@ -334,11 +343,22 @@
 </sidebar>
     </div>
     <div id="content-body">
-      
-   
+       
 
 
 <article id="post-2024-1-20-inklinker" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img" rel="gallery_clrn9fvn70008js952opx4vj4">
+        <img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/INK.png" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
    
   <div class="article-inner">
     <div class="article-main">
@@ -348,8 +368,8 @@
   <div class="main-title-dot"></div>
   
     
-      <h1 itemprop="name">
-        <a class="p-name article-title" href="/2024/01/21/2024-1-20-inklinker/">InkLinker (Blog platform)</a>
+      <h1 class="p-name article-title" itemprop="headline name">
+        InkLinker (Blog platform)
       </h1>
     
   
@@ -377,371 +397,171 @@
       </header>
       <div class="e-content article-entry" itemprop="articleBody">
         
-          <div class="truncate-text">
-            
-              
+          <div class="video-container"><iframe src="https://www.youtube.com/embed/xTIN2mkI4ts" frameborder="0" loading="lazy" allowfullscreen></iframe></div>
 
 
-前言（preface）：這是一個以結合Medium、Notion 各自優點為目標的部落格平台，其中核心技術在於編輯器的實作(離線同步恢復、及時保存機制等等)以及運用 ML(Machine Learning)的方式實作推薦演算法，系統開發流程遵循Scrum的敏捷開發方式，是一個為期 3 sprints的全端個人專案且有著高度的**分層架構 (Layered Architecture)**讓整體的系統更好維護及擴展。
-This is a blogging platform aimed at combining the best features of Medium and Notion. Its core technology focuses on the implementation of the editor (offline sync recovery, real-time save mechanism, etc.) and the application of machine learning (ML) for recommendation algorithm deve...
-            
-          </div>
+<h3 id="前言（preface）："><a href="#前言（preface）：" class="headerlink" title="前言（preface）："></a>前言（preface）：</h3><p>這是一個以結合Medium、Notion 各自優點為目標的部落格平台，其中核心技術在於<strong>編輯器的實作(離線同步恢復、及時保存機制等等)<strong>以及運用 <strong>ML(Machine Learning)的方式實作推薦演算法</strong>，系統開發流程遵循</strong>Scrum的敏捷開發方式</strong>，是一個為期 3 sprints的<strong>全端個人專案</strong>且有著高度的**分層架構 (Layered Architecture)**讓整體的系統更好維護及擴展。</p>
+<p>This is a blogging platform aimed at combining the best features of Medium and Notion. Its core technology focuses on the implementation of the editor (offline sync recovery, real-time save mechanism, etc.) and the application of machine learning (ML) for recommendation algorithm development. The system’s development process adheres to the Scrum agile development method. It is a full-stack personal project spanning 3 sprints, featuring a highly layered architecture (Layered Architecture) which enhances the overall system’s maintainability and scalability.</p>
+<h3 id="開發語言、環境與框架（Programming-Languages-Environment-and-Frameworks）："><a href="#開發語言、環境與框架（Programming-Languages-Environment-and-Frameworks）：" class="headerlink" title="開發語言、環境與框架（Programming Languages, Environment, and Frameworks）："></a>開發語言、環境與框架（Programming Languages, Environment, and Frameworks）：</h3><blockquote>
+<p>後端 (Back-end)： <em>JavaScript、Node.js、Express、MySQL</em></p>
+<p>前端(Front-end)：<em>HTML、Styled-Component CSS、React.js</em></p>
+<p>雲端服務 (Cloud Service)：<em>AWS EC2(Linux ubuntu)、AWS RDS、AWS S3</em></p>
+<p>容器化工具、技術（Containerization）：<em>Docker、Docker Compose</em></p>
+<p>快取 (Cache)：<em>Redis</em></p>
+</blockquote>
+<h2 id="其他主要技術："><a href="#其他主要技術：" class="headerlink" title="其他主要技術："></a>其他主要技術：</h2><blockquote>
+<p>即時性實現：<em>Socket.io</em></p>
+<p>模型建置及訓練：Tensorflow.js</p>
+<p>SSL、反向代理（Request broker）：<em>Nginx</em></p>
+<p>CI&#x2F;CD自動化測試與部署：<em>Github Action</em></p>
+<p>Version Control：<em>Git</em></p>
+<p><em>JWT實作</em></p>
+</blockquote>
+<h2 id="系統架構圖："><a href="#系統架構圖：" class="headerlink" title="系統架構圖："></a>系統架構圖：</h2><p><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/InkLinkerSys.png" alt="richText"></p>
+<h3 id="亮點功能介紹（Feature-Introduction）："><a href="#亮點功能介紹（Feature-Introduction）：" class="headerlink" title="亮點功能介紹（Feature Introduction）："></a>亮點功能介紹（Feature Introduction）：</h3><blockquote>
+<p><strong><em>編輯器 (Editor)：</em></strong></p>
+<ul>
+<li>富文本效果：<blockquote>
+<ol>
+<li>運用React Quill實作</li>
+<li>所見即所得的Markdown語法支援</li>
+<li>搭配AWS S3預簽名的方式實作支援圖片上傳<br><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/richText.png" alt="richText"></li>
+</ol>
+</blockquote>
+</li>
+<li>及時保存機制：<blockquote>
+<ol>
+<li>透過<strong>Socket.io ,LocalStorage</strong>的搭配使用來做到讓用戶不會意外中斷後編輯內容遺失的問題</li>
+<li>使用Dompurify去防止<strong>XSS攻擊</strong></li>
+<li>後端接到的Socket會<strong>先存到Redis中</strong>，在socket關閉連線時才會同步到資料庫，進一步提升編輯器的效能</li>
+<li>觸發儲存以及發送socket同步後端的時機點是在<strong>鼠標失去focus</strong>的時候而非每個打字瞬間（<strong>減少Redis壓力</strong></li>
+<li>透過在header處添加訊息**可視化即時的儲存狀態(Saved, Saving)**來讓用戶清楚知道儲存情況</li>
+</ol>
+</blockquote>
+</li>
+<li>離線編輯&#x2F;自動恢復(同步)機制：<blockquote>
+<ol>
+<li>包含狀態通知(Can’t save)同樣透過LocalStorage搭配Socket.io實作，當偵測到再次恢復上線時，離線時編輯的內容不會消失而是會自動同步到後端去<br>ps: 這邊demo看影片最為清楚！<br><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/offline.png" alt="offline"></li>
+</ol>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong><em>會員註冊登入 (Signup&#x2F;in)：</em></strong></p>
+<ul>
+<li><em>以中間件的方式實作 JWT 驗證使用者身份(Implementing JWT to verify the user Identity By means of middleware)</em></li>
+</ul>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">authorization</span>: <span class="keyword">async</span> (req, res, next) =&gt; &#123;</span><br><span class="line">        <span class="keyword">const</span> authorizationHeader = req.<span class="property">headers</span>.<span class="property">authorization</span>;</span><br><span class="line">        <span class="keyword">if</span> (!authorizationHeader || authorizationHeader.<span class="title function_">trim</span>() === <span class="string">&#x27;&#x27;</span> || <span class="keyword">typeof</span> authorizationHeader === <span class="string">&#x27;undefined&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> errorMsg.<span class="title function_">noToken</span>(res);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> token = authorizationHeader.<span class="title function_">split</span>(<span class="string">&#x27; &#x27;</span>)[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">const</span> payload = <span class="keyword">await</span> tool.<span class="title function_">decodeToken</span>(token);</span><br><span class="line">            <span class="keyword">const</span> &#123; userId &#125; = payload;</span><br><span class="line">            req.<span class="property">userData</span> = &#123; <span class="attr">userId</span>: userId &#125;;</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">next</span>();</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">error</span>(error);</span><br><span class="line">            <span class="keyword">return</span> errorMsg.<span class="title function_">wrongToken</span>(res);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong><em>文章相關(About The Post Feature)：</em></strong></p>
+<ul>
+<li><em>按贊功能：</em><blockquote>
+<ol>
+<li>運用lodash.debounce實作防抖機制<br><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/pLike.png" alt="offline"></li>
+</ol>
+</blockquote>
+</li>
+<li><em>以cursor的概念<strong>實作Pagination</strong> 前端手刻Infinite Scroll來呈現</em></li>
+</ul>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cusr= result.<span class="property">length</span> &lt; limit ? <span class="literal">null</span> : <span class="title class_">String</span>(result[result.<span class="property">length</span> - <span class="number">2</span>].<span class="property">id</span>);</span><br><span class="line"><span class="keyword">let</span> next_cursor = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">if</span>(cusr != <span class="literal">null</span>)&#123;</span><br><span class="line">   next_cursor = <span class="keyword">await</span> tool.<span class="title function_">encryptCursor</span>(cusr);</span><br><span class="line">   next_cursor = <span class="built_in">encodeURIComponent</span>(next_cursor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li><em>熱門Hashtags&#x2F;文章</em></li>
+<li><em>文章標題搜尋功能</em></li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong><em>推薦系統(Recommendation System)：</em></strong></p>
+<ul>
+<li><em>數據處理、準備：</em><blockquote>
+<ol>
+<li>query出現有的用戶對每一篇文章的喜好情況（目前只考慮進用戶按讚這個行為</li>
+<li>進行索引mapping後將一些不合的格式透過編碼處理轉換為符合tensorflow可接受的格式比如category就是透過<strong>one-hot encode</strong>從文字轉換而來</li>
+</ol>
+</blockquote>
+</li>
+<li><em>模型定義、訓練：</em><blockquote>
+<ol>
+<li>運用<strong>tensorflow.js</strong>進行Model的定義(input,output,多少層、神經元等等)</li>
+<li>將前面數據轉換後的結果喂給Model，並將訓練好的Model透過Docker Volume持久化起來</li>
+</ol>
+</blockquote>
+</li>
+<li><em>模型預測用戶的閱讀偏好：</em><blockquote>
+<ol>
+<li>將當前用戶ID放入Model預測並將結果整理進行排序後在再經過Repo query將推薦文章列表的詳細內容以Pagination方式呈現</li>
+<li>因為Model吃到的資料是每位用戶對應每篇文章的對應喜好，所以除了個人喜好的文章種類推薦分數較高外，整體系統的熱門文章分數也會較高</li>
+<li>也有透過Redis快取住推薦結果來提升用戶使用體驗<br><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/Recommand.png" alt="offline"></li>
+</ol>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<h3 id="環境部署（environment-deploy）："><a href="#環境部署（environment-deploy）：" class="headerlink" title="環境部署（environment deploy）："></a>環境部署（environment deploy）：</h3><blockquote>
+<ul>
+<li><p><em>透過 <strong>Nginx</strong> 處理 <strong>SSL</strong> 以及<strong>請求的反向代理</strong> Handling SSL and HTTP&#x2F;HTTPS request redirection through Nginx</em></p>
+</li>
+<li><p><em>運用<strong>Docker</strong>將各個Service容器化比如Redis,Nginx，MySQL則用雲端的<strong>RDS</strong> Using Docker to containerize an Express application, Redis, Nginx, while utilizing cloud-based RDS for MYSQL</em></p>
+</li>
+<li><p><em>運用<strong>GitHub Action 實作CI&#x2F;CD</strong> 完成<strong>自動化測試與部署</strong> 增加系統開發速度與完整性(Implement CI&#x2F;CD with GitHub Actions for Automated Testing and Deployment to Docker</em></p>
+</li>
+<li><p><em>Git Version Control</em></p>
+</li>
+</ul>
+</blockquote>
+<h3 id="其他學習點："><a href="#其他學習點：" class="headerlink" title="其他學習點："></a>其他學習點：</h3><blockquote>
+<ol>
+<li>運用更高度的分層架構（Layered Architecture）讓整體系統的<strong>擴展性</strong>以及<strong>維護性</strong>提高</li>
+<li>Cache Aside快取策略的實作</li>
+<li>前端Redux、以及各種library的使用</li>
+<li>如何以適當合理的方式去提升系統的效能（比如編輯器的部分：何時將快取同步進資料庫等等</li>
+</ol>
+</blockquote>
+<h3 id="心路歷程（Inner-Journey）："><a href="#心路歷程（Inner-Journey）：" class="headerlink" title="心路歷程（Inner Journey）："></a>心路歷程（Inner Journey）：</h3><p>這份side project是我第一份最為完整的全端(Full Stack)作品，也是第一份融入ML AI技術而不是使用別人AI服務的Web作品。回想起開發路程真的超級地獄，因為在只有3個sprint（3週）的開發時間裡同時要準備學校的一坨期中考，睡6小時都成了最幸福的事，連飯都可以不吃整天除了打code上廁所外不出房門:D</p>
+<p>但其實這段日子既地獄又開心，因為從來沒這麼全身心地投入開發某個專案的經驗，而且成就感隨著作品的完成度漸增呈現指數成長🥵，透過這份專案我對前端的開發也是多了份熟悉(但還是想以後端發展 不是那麼喜歡前端🥵)</p>
+<p>對我自己來說這份專案的完成算是剛走出Web開發新手村，接下來Waiting要繼續朝著後端領域前進了！🔥</p>
+<p><strong>THANKS WATCHING</strong></p>
+
         
       </div>
 
          
     </div>
     
-     
-    <a class="right-panel  with-pic  "
-       style="background-image: url(https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/INK.png)" 
-      href="/2024/01/21/2024-1-20-inklinker/" 
-    >
-       
-      <div class="overlay">
-        <i class="fa-solid fa-angle-right with-pic"></i>
-      </div>
-       
-    </a>
      
   </div>
   
-</article>
-
-
-
-
-
-
-
-   
-
-
-<article id="post-2023-9-25-cache" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-   
-  <div class="article-inner">
-    <div class="article-main">
-      <header class="article-header">
-        
-<div class="main-title-bar">
-  <div class="main-title-dot"></div>
-  
     
-      <h1 itemprop="name">
-        <a class="p-name article-title" href="/2023/09/25/2023-9-25-cache/">Den&#39;s cache學習筆記</a>
-      </h1>
+<nav id="article-nav">
+  <a class="article-nav-btn left  disabled "
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
     
-  
-</div>
+      href="/2023/09/25/2023-9-25-cache/"
+      title="Den's cache學習筆記"
+     >
 
-        <div class='meta-info-bar'>
-          <div class="meta-info">
-  <time class="dt-published" datetime="2023-09-24T16:00:00.000Z" itemprop="datePublished">2023-09-25</time>
-</div>
-          <div class="need-seperator meta-info">
-            <div class="meta-cate-flex">
-  
-  <a class="meta-cate-link" href="/categories/learning-note/">learning note</a>
-   
-</div>
-  
-          </div>
-          <div class="wordcount need-seperator meta-info">
-            2.5k words 
-          </div>
-        </div>
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/" rel="tag">cache</a></li></ul>
-
-      </header>
-      <div class="e-content article-entry" itemprop="articleBody">
-        
-          <div class="truncate-text">
-            
-              前言（preface）：本篇是記錄學習cache快取策略的筆記，以及一些實作經驗。
-
-基本快取概念（Concepts）：為了減輕Database的壓力以及提升系統效能，原理就是將可重複使用的資料存在記憶體中，這樣就能免去每次都需要跑去資料庫拿取又或是重新經過複雜計算的動作，類似殺雞焉用牛刀的概念。
-
-快取的策略、模式Cache Aside最簡單又常見的一個，讀策略就是cache有就拿沒有就去資料庫拿拿完再放入cache，寫策略則是先更新完資料庫後刪除於快取的舊資料可以注意的點是，此策略下是由應用程式(Application Layer)負責與快取、資料庫做互動，快取系統只被作為一個暫存資料的容器。
-應用情境：    不適合寫多的情形，假設a發出讀取請求且未命中緩存的當下近乎同時b發出寫入請求，儘管資料庫是最新的資料但a有極大的機率拿到髒資料（也因此導致快取與DB資料不一致），原因是因為寫策略並沒有更新到緩存，所以通常遇到寫多的情形時會選擇其他策略又或是將緩存過期時間設置極短
-優點：
-
-易實現、不容易產生快取併發問題
-讀多的情況下有極高的效能（廢話XD）資料庫負擔小
-快取serve...
-            
-          </div>
-        
-      </div>
-
-         
-    </div>
-    
-     
-    <a class="right-panel  with-pic  "
-       style="background-image: url(https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/cache.jpg)" 
-      href="/2023/09/25/2023-9-25-cache/" 
-    >
-       
-      <div class="overlay">
-        <i class="fa-solid fa-angle-right with-pic"></i>
-      </div>
-       
-    </a>
-     
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-   
-
-
-<article id="post-2023-9-14-soon_solve" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-   
-  <div class="article-inner">
-    <div class="article-main">
-      <header class="article-header">
-        
-<div class="main-title-bar">
-  <div class="main-title-dot"></div>
-  
-    
-      <h1 itemprop="name">
-        <a class="p-name article-title" href="/2023/09/14/2023-9-14-soon_solve/">Soon Solve</a>
-      </h1>
-    
-  
-</div>
-
-        <div class='meta-info-bar'>
-          <div class="meta-info">
-  <time class="dt-published" datetime="2023-09-13T16:00:00.000Z" itemprop="datePublished">2023-09-14</time>
-</div>
-          <div class="need-seperator meta-info">
-            <div class="meta-cate-flex">
-  
-  <a class="meta-cate-link" href="/categories/side-project/">side project</a>
-   
-</div>
-  
-          </div>
-          <div class="wordcount need-seperator meta-info">
-            3k words 
-          </div>
-        </div>
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/side-project/" rel="tag">side project</a></li></ul>
-
-      </header>
-      <div class="e-content article-entry" itemprop="articleBody">
-        
-          <div class="truncate-text">
-            
-              
-
-
-
-前言（preface）：這篇文會分享Soon Solve這個side project的開發技術、功能介紹以及學習心得!但因為本人負責後端開發所以開發技術的分享著重在後端的介紹！前端的學習紀錄可以參考我的夥伴筆記
-Soon Solve 基本介紹：Soon Solve的開發夥伴總共5位是以前後端分離的方式進行開發，後端包含我是3人，前端為2人，開發時間為兩週，透過設計思考的概念我們在一開始就不花多少時間便定好了Soon Solve的Core Value：順路(便)經濟而主要理念是讓大學生在校園中可以透過此應用程式將自己瑣碎的時間轉變為對自己而言更有價值的寶物同時促進整體校園環境變得更加和諧
-系統開發完整性在6,7成，目前主要限制在台大校園裡的建築為任務地點作為指標，來不及開發出完整的map系統
-其中我覺得最為有趣的是在某些功能上我們似乎存在滿有料的隱藏性價值XD
-開發語言、環境與框架（Programming Languages, Environment, and Frameworks）：
-後端 (Back-end)： JavaScript、Node.js、Express、My...
-            
-          </div>
-        
-      </div>
-
-         
-    </div>
-    
-     
-    <a class="right-panel  with-pic  "
-       style="background-image: url(https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/sslogo.png)" 
-      href="/2023/09/14/2023-9-14-soon_solve/" 
-    >
-       
-      <div class="overlay">
-        <i class="fa-solid fa-angle-right with-pic"></i>
-      </div>
-       
-    </a>
-     
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-   
-
-
-<article id="post-2023-9-11-rabbitmq" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-   
-  <div class="article-inner">
-    <div class="article-main">
-      <header class="article-header">
-        
-<div class="main-title-bar">
-  <div class="main-title-dot"></div>
-  
-    
-      <h1 itemprop="name">
-        <a class="p-name article-title" href="/2023/09/11/2023-9-11-rabbitmq/">Den&#39;s RabbitMQ學習筆記</a>
-      </h1>
-    
-  
-</div>
-
-        <div class='meta-info-bar'>
-          <div class="meta-info">
-  <time class="dt-published" datetime="2023-09-10T16:00:00.000Z" itemprop="datePublished">2023-09-11</time>
-</div>
-          <div class="need-seperator meta-info">
-            <div class="meta-cate-flex">
-  
-  <a class="meta-cate-link" href="/categories/learning-note/">learning note</a>
-   
-</div>
-  
-          </div>
-          <div class="wordcount need-seperator meta-info">
-            3k words 
-          </div>
-        </div>
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li></ul>
-
-      </header>
-      <div class="e-content article-entry" itemprop="articleBody">
-        
-          <div class="truncate-text">
-            
-              前言（preface）：本篇是記錄在學習RabbitMQ的過程與經驗，會介紹RabbitMQ的概念、實作方式、以及一些常見Bug解法。如果有錯請大哥指點QQ
-概念（Concepts）：RabbitMQ本質是一個 Queue，但專門用於訊息發送接收的一種訊息代理軟體，就像是Nginx 代理Http&#x2F;Https請求的概念，他專門代理發送者傳出的訊息，也因此能做到傳送訊息雙方的「解耦」，因為發送方只需將訊息交給RabbitMQ而不需去知道哪個應用程式要使用到
-RabbitMQ的競爭者有Kafaka、RocketMQ、ActiveMQ而他比較獨特的點就是支援AMQP這樣的訊息傳遞協議 在NodeJS中就有提供amqplib這樣的library 
-
-amqplib 是 RabbitMQ 的官方 Node.js 客戶端庫，它提供了兩種不同的API風格：Promise-based API 和 Callback-based API。12const amqp = require(&#x27;amqplib&#x27;);const amqp = require(&#x27;amqplib...
-            
-          </div>
-        
-      </div>
-
-         
-    </div>
-    
-     
-    <a class="right-panel  with-pic  "
-       style="background-image: url(https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/rabbit.png)" 
-      href="/2023/09/11/2023-9-11-rabbitmq/" 
-    >
-       
-      <div class="overlay">
-        <i class="fa-solid fa-angle-right with-pic"></i>
-      </div>
-       
-    </a>
-     
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-   
-
-
-<article id="post-2023-9-07-canchu" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-   
-  <div class="article-inner">
-    <div class="article-main">
-      <header class="article-header">
-        
-<div class="main-title-bar">
-  <div class="main-title-dot"></div>
-  
-    
-      <h1 itemprop="name">
-        <a class="p-name article-title" href="/2023/09/07/2023-9-07-canchu/">Canchu (social media)</a>
-      </h1>
-    
-  
-</div>
-
-        <div class='meta-info-bar'>
-          <div class="meta-info">
-  <time class="dt-published" datetime="2023-09-06T16:00:00.000Z" itemprop="datePublished">2023-09-07</time>
-</div>
-          <div class="need-seperator meta-info">
-            <div class="meta-cate-flex">
-  
-  <a class="meta-cate-link" href="/categories/side-project/">side project</a>
-   
-</div>
-  
-          </div>
-          <div class="wordcount need-seperator meta-info">
-            3.7k words 
-          </div>
-        </div>
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AppWorks-School/" rel="tag">AppWorks School</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/side-project/" rel="tag">side project</a></li></ul>
-
-      </header>
-      <div class="e-content article-entry" itemprop="articleBody">
-        
-          <div class="truncate-text">
-            
-              
-
-
-
-
-前言（preface）：這篇文會分享在實作Canchu這個social media 的心路歷程、相關技術，順便（喔不 是必須要）推一波AppWorks School XD
-This article will share the journey of implementing the social media platform “Canchu,” the relevant technologies involved, and also give a shout-out to AppWorks School.
-開發語言、環境與框架（Programming Languages, Environment, and Frameworks）：
-後端 (Back-end)： JavaScript、Node.js 、Express、MySQL
-雲端服務 (Cloud Service)：Linux(AWS EC2)、AWS RDS、AWS Load Balancer
-容器化工具（Containerization）：Docker
-前端(Front-end)：HTML&#x2F;CSS&#x...
-            
-          </div>
-        
-      </div>
-
-         
-    </div>
-    
-     
-    <a class="right-panel  non-pic  "
+    <p class="title-text">
       
-      href="/2023/09/07/2023-9-07-canchu/" 
-    >
-       
-      <i class="fa-solid fa-angle-right non-pic"></i>
-       
-    </a>
-     
-  </div>
+        Den&#39;s cache學習筆記
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
   
 </article>
-
-
-
 
 
 

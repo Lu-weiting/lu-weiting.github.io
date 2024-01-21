@@ -20,18 +20,19 @@
   <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
-  <meta name="description" content="前言（preface）：本篇是記錄學習cache缓存策略的筆記，如果有錯請大哥指點QQ 基本快取概念（Concepts）：為了減輕Database的壓力以及提升系統效能，原理就是將可重複使用的資料存在記憶體中，這樣就能免去每次都需要跑去資料庫拿取又或是重新經過複雜計算的動作，類似於殺雞焉用牛刀。 快取的策略、模式Cache Aside滿簡單又常見的一個，讀策略就是cache有就拿沒有就去資料庫拿拿">
+  <meta name="description" content="前言（preface）：本篇是記錄學習cache快取策略的筆記，以及一些實作經驗。  基本快取概念（Concepts）：為了減輕Database的壓力以及提升系統效能，原理就是將可重複使用的資料存在記憶體中，這樣就能免去每次都需要跑去資料庫拿取又或是重新經過複雜計算的動作，類似殺雞焉用牛刀的概念。  快取的策略、模式Cache Aside最簡單又常見的一個，讀策略就是cache有就拿沒有就去資料庫">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Den&#39;s cache學習筆記">
 <meta property="og:url" content="http://example.com/2023/09/25/2023-9-25-cache/index.html">
 <meta property="og:site_name" content="Wei-Ting&#39;s Blog">
-<meta property="og:description" content="前言（preface）：本篇是記錄學習cache缓存策略的筆記，如果有錯請大哥指點QQ 基本快取概念（Concepts）：為了減輕Database的壓力以及提升系統效能，原理就是將可重複使用的資料存在記憶體中，這樣就能免去每次都需要跑去資料庫拿取又或是重新經過複雜計算的動作，類似於殺雞焉用牛刀。 快取的策略、模式Cache Aside滿簡單又常見的一個，讀策略就是cache有就拿沒有就去資料庫拿拿">
+<meta property="og:description" content="前言（preface）：本篇是記錄學習cache快取策略的筆記，以及一些實作經驗。  基本快取概念（Concepts）：為了減輕Database的壓力以及提升系統效能，原理就是將可重複使用的資料存在記憶體中，這樣就能免去每次都需要跑去資料庫拿取又或是重新經過複雜計算的動作，類似殺雞焉用牛刀的概念。  快取的策略、模式Cache Aside最簡單又常見的一個，讀策略就是cache有就拿沒有就去資料庫">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/cache.jpg">
 <meta property="article:published_time" content="2023-09-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-19T06:48:10.164Z">
+<meta property="article:modified_time" content="2024-01-21T08:42:45.196Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="backend">
+<meta property="article:tag" content="cache">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/cache.jpg">
   
@@ -226,7 +227,7 @@
     <div class="info">
       <div class="username">劉威廷 </div>
       <div class="dot"></div>
-      <div class="subtitle">持續努力學習中。最近很喜歡的一句話：不是因為你很厲害才去做而是去做了才很厲害 </div>
+      <div class="subtitle">持續努力學習中！最近很喜歡的一句話：不是因為你很厲害才能去做 而是去做了才能很厲害 </div>
       <div class="link-list">
         
           <a class="link-btn" target="_blank" rel="noopener" href="https://www.instagram.com/coding_den_/?igsh=YTQwZjQ0NmI0OA%3D%3D&utm_source=qr" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
@@ -246,13 +247,30 @@
       
 
 
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Categories</h3>
+      <div class="category-box">
+            <a class="category-link" href="/categories/side-project/">
+                side project
+                <div class="category-count">3</div>
+            </a>
+        
+            <a class="category-link" href="/categories/learning-note/">
+                learning note
+                <div class="category-count">2</div>
+            </a>
+        </div>
+    </div>
+  </div>
+
 
     
       
   <div class="widget-wrap">
     <div class="widget">
       <h3 class="widget-title">Tags</h3>
-      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/AppWorks-School/" rel="tag">AppWorks School</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/side-project/" rel="tag">side project</a></li></ul>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/AppWorks-School/" rel="tag">AppWorks School</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Scrum/" rel="tag">Scrum</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/cache/" rel="tag">cache</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/full-stack/" rel="tag">full stack</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/side-project/" rel="tag">side project</a></li></ul>
     </div>
   </div>
 
@@ -263,6 +281,11 @@
     <div class="widget">
       <h3 class="widget-title">Archives</h3>
       
+      
+        <a class="archive-link" href="/archives/2024/01 ">
+          January 2024 
+          <div class="archive-count">1 </div>
+        </a>
       
         <a class="archive-link" href="/archives/2023/09 ">
           September 2023 
@@ -279,6 +302,12 @@
     <div class="widget">
       <h3 class="widget-title">Recent Posts</h3>
       <ul>
+        
+          <a class="recent-link" href="/2024/01/21/2024-1-20-inklinker/" title="InkLinker (Blog platform)" >
+            <div class="recent-link-text">
+              InkLinker (Blog platform)
+            </div>
+          </a>
         
           <a class="recent-link" href="/2023/09/25/2023-9-25-cache/" title="Den's cache學習筆記" >
             <div class="recent-link-text">
@@ -322,7 +351,7 @@
 <div class="article-gallery">
   <div class="article-gallery-photos">
     
-      <a class="article-gallery-img" rel="gallery_clrka5wcn0003qv951gu5ez4q">
+      <a class="article-gallery-img" rel="gallery_clrn9fvn70007js9599sramh4">
         <img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/cache.jpg" itemprop="image">
       </a>
     
@@ -352,57 +381,100 @@
           <div class="need-seperator meta-info">
             <div class="meta-cate-flex">
   
-    Uncategorized 
+  <a class="meta-cate-link" href="/categories/learning-note/">learning note</a>
    
 </div>
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            2k words 
+            2.5k words 
           </div>
         </div>
         
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cache/" rel="tag">cache</a></li></ul>
 
       </header>
       <div class="e-content article-entry" itemprop="articleBody">
         
-          <h1 id="前言（preface）："><a href="#前言（preface）：" class="headerlink" title="前言（preface）："></a>前言（preface）：</h1><p>本篇是記錄學習cache缓存策略的筆記，如果有錯請大哥指點QQ</p>
-<h1 id="基本快取概念（Concepts）："><a href="#基本快取概念（Concepts）：" class="headerlink" title="基本快取概念（Concepts）："></a>基本快取概念（Concepts）：</h1><p>為了減輕Database的壓力以及提升系統效能，原理就是將可重複使用的資料存在記憶體中，這樣就能免去每次都需要跑去資料庫拿取又或是重新經過複雜計算的動作，類似於殺雞焉用牛刀。</p>
-<h1 id="快取的策略、模式"><a href="#快取的策略、模式" class="headerlink" title="快取的策略、模式"></a>快取的策略、模式</h1><h2 id="Cache-Aside"><a href="#Cache-Aside" class="headerlink" title="Cache Aside"></a>Cache Aside</h2><p>滿簡單又常見的一個，讀策略就是cache有就拿沒有就去資料庫拿拿完再放入cache，寫策略則是先更新完資料庫後刪除於快取的舊資料<br>可以注意的點是，此策略下是由應用程式負責與快取、資料庫做互動，快取系統只被作為一個暫存資料的容器。</p>
-<p><strong><em>應用情境：</em></strong><br>不適合寫多的情形，假設a發出讀取請求且未命中緩存的當下近乎同時b發出寫入請求，儘管資料庫是最新的資料但a有極大的機率拿到髒資料，原因是因為寫策略並沒有更新到緩存，所以通常遇到寫多的情形時會選擇其他策略又或是將緩存過期時間設置極短</p>
-<p><strong><em>優點：</em></strong><br>易實現、不容易產生緩存併發問題、讀多的情況下有極高的效能（廢話因為就是讀取時會更新緩存XD）、資料庫負擔小</p>
-<p>最大的<strong>缺點</strong>大概就是當資料寫入變多時資料一致性會越來越低吧</p>
-<p>以下是一些我覺得好奇而理清的點：</p>
-<ol>
-<li><em>為什麼寫策略要<strong>先更新</strong>資料庫<strong>再刪除</strong>緩存而不是<strong>先刪除</strong>緩存<strong>再更新</strong>資料庫？</em></li>
-</ol>
-<p><code>原因：讀寫併發時，會因為緩存的操作耗時與資料庫操作耗時之間的差異導致數據不一致的問題</code></p>
-<p>緩存的寫入遠快於資料庫的寫入所以規定好寫入規則為先更新資料庫再刪除快取就能解決緩存、資料庫數據不一致的問題（cache aside只有讀策略會更新緩存）</p>
-<p><strong><em>鮮明的例子：</em></strong><br>當a發出讀取某資料請求且緩存未命中後，b發出對那筆資料寫入的請求，a在資料庫讀取到資料後的下一步便是將資料寫回緩存（只是這個資料是髒資料），而對資料庫操作必是&gt;&gt;對緩存的操作耗時，所以b更新資料庫這個操作絕對會比a將髒資料寫進緩存來得慢許多，也就是如果以先更新資料庫在刪除緩存的順序下，讀寫併發也不太可能造成資料庫與緩存不一致的問題，反之，如果是先刪除在更新的順序下，可以發現資料庫更新會是最後完成的動作也就是說緩存存的是髒資料</p>
-<ol start="2">
-<li><em>為什麼寫策略是<strong>刪除緩存</strong>不是<strong>更新緩存</strong>？</em></li>
-</ol>
-<p>寫策略之所以不選擇直接將資料同步進緩存，是因為當同時有許多對於寫入的請求出現時，快取的寫入會大爆炸，需要在應用程式將緩存的事務管理、lock邏輯寫清（所以才有Write-Through的誕生）。而相對的當同時有許多對於寫入的請求出現時以Cache Aside write策略下，併發問題的處理就能夠透過簡單的資料庫事務解決</p>
+          <h1 id="前言（preface）："><a href="#前言（preface）：" class="headerlink" title="前言（preface）："></a>前言（preface）：</h1><p>本篇是記錄學習cache快取策略的筆記，以及一些實作經驗。</p>
+<hr>
+<h1 id="基本快取概念（Concepts）："><a href="#基本快取概念（Concepts）：" class="headerlink" title="基本快取概念（Concepts）："></a>基本快取概念（Concepts）：</h1><p>為了減輕Database的壓力以及提升系統效能，原理就是將可重複使用的資料存在記憶體中，這樣就能免去每次都需要跑去資料庫拿取又或是重新經過複雜計算的動作，類似殺雞焉用牛刀的概念。</p>
+<hr>
+<h1 id="快取的策略、模式"><a href="#快取的策略、模式" class="headerlink" title="快取的策略、模式"></a>快取的策略、模式</h1><h2 id="Cache-Aside"><a href="#Cache-Aside" class="headerlink" title="Cache Aside"></a>Cache Aside</h2><p>最簡單又常見的一個，讀策略就是cache<strong>有就拿沒有就去資料庫拿拿完再放入cache</strong>，寫策略則是<strong>先更新完資料庫後刪除於快取的舊資料</strong><br>可以注意的點是，此策略下是由應用程式(Application Layer)負責與快取、資料庫做互動，<strong>快取系統只被作為一個暫存資料的容器</strong>。</p>
+<p><strong><em>應用情境：</em></strong><br>    不適合寫多的情形，假設a發出讀取請求且未命中緩存的當下近乎同時b發出寫入請求，儘管資料庫是最新的資料但a有極大的機率拿到髒資料（也因此導致快取與DB資料不一致），原因是因為寫策略並沒有更新到緩存，所以通常遇到寫多的情形時會選擇其他策略又或是將緩存過期時間設置極短</p>
+<p><strong><em>優點：</em></strong></p>
+<ul>
+<li>易實現、不容易產生快取併發問題</li>
+<li>讀多的情況下有極高的效能（廢話XD）資料庫負擔小</li>
+<li>快取server負擔小（因為寫策略不用管那麼多，一有更新直接清掉快取就行）</li>
+</ul>
+<p><strong><em>缺點：</em></strong><br>    資料寫入操作變多時會漸漸<strong>失去使用快取的意義</strong>，因為一直刪快取不就等於大部分時間都要進DB重新拿資料嗎XD</p>
 <p><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/aside.png" alt="notification"></p>
-<h2 id="Read-Write-Through"><a href="#Read-Write-Through" class="headerlink" title="Read&#x2F;Write Through"></a>Read&#x2F;Write Through</h2><p>最大最明顯的差異就在於Write Through啦，他需要開發人員自己編碼複雜的lock設計、事務管理、甚至失敗復原等等解決大量寫入緩存造成的併發問題，但也因為寫入就更新而進一步提升資料一致性，其他主要差異在於不同於cache aside，應用程式不再會直接與資料庫溝通，轉而透過緩存做代理。</p>
-<p><strong><em>應用情境：</em></strong><br>也不適合在寫多讀少，但相對cache aside來得更適合些@@、適合於金融相關的應用程式中使用（高資料一致性）</p>
-<p><strong><em>優點：</em></strong><br>在提供<strong>資料一致性</strong>方面比Cache aside表現得更好</p>
-<p><strong><em>缺點：</em></strong><br>不易實現、寫入性能相對較低、緩存伺服器負載大（每一個寫入都要排隊—&gt;同步）</p>
-<p><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/readwrite.png" alt="notification"></p>
-<h2 id="對cache-aside-Read-Write-Through的小整理："><a href="#對cache-aside-Read-Write-Through的小整理：" class="headerlink" title="對cache aside&#x2F;Read&#x2F;Write Through的小整理："></a>對cache aside&#x2F;Read&#x2F;Write Through的小整理：</h2><ol>
-<li><p>遇到<strong>寫入併發</strong>時，cache aside是依賴資料庫的事務管理機制去解決，開發人員不用自己設計一套事務管理、lock邏輯 而Read&#x2F;Write Through策略下則是要開發人員在應用程式中自行設計一套事務管理邏輯來處理</p>
-</li>
-<li><p>Read&#x2F;Write Through相較於cache aside最大的優點就是讓資料庫與緩存資料差異減少，不會像cache aside雖然資料庫都是最新的資料但緩存必須要等待下一次read才會更新至最新</p>
-</li>
-<li><p>Read&#x2F;Write Through 中cache作為應用程式與資料庫之間的資料管理者（自動化）而非像cache aside中cache只是單純作為一個存緩存資料的容器，代理的概念實作上其實就只是差在使用redis client函式的寫法</p>
+<h3 id="我覺得滿有意義的思考點："><a href="#我覺得滿有意義的思考點：" class="headerlink" title="我覺得滿有意義的思考點："></a>我覺得滿有意義的思考點：</h3><ol>
+<li><em>為什麼寫策略要<strong>先更新</strong>資料庫<strong>再刪除</strong>快取而不是<strong>先刪除</strong>快取<strong>再更新</strong>資料庫？</em></li>
+</ol>
+<p><code>原因：讀寫併發時，會因為快取與資料庫操作之間耗時的差異導致數據不一致的問題</code></p>
+<p>–&gt;快取的寫入遠快於資料庫的寫入，所以規定好寫入規則為先更新資料庫再刪除快取就能解決快取、資料庫數據不一致的問題</p>
+<p><strong><em>鮮明的例子：</em></strong><br>    當A發出讀取某資料請求且快取未命中後，B發出對那筆資料寫入的請求，a從資料庫讀取到資料後的下一步便是將資料寫回快取（只是這個資料將會是髒資料），而對資料庫操作必是&gt;&gt;對快取的操作耗時，所以<strong>B更新資料庫這個操作絕對會比a將髒資料寫進緩存來得慢許多</strong>，也就是如果以先更新資料庫在刪除快取的規則順序下，讀寫併發也不太可能造成資料庫與快取不一致的問題(因為更新後下一步便是清除快取(髒資料掰掰))，反之，如果是先刪除在更新的順序下，可以發現資料庫更新會是最後完成的動作也就是說快取存到的是髒資料。</p>
+<ul>
+<li>下面兩張附圖可以更清晰地看出這兩種規則順序造成的差異：<br><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/WCacheAside.png" alt="Wrong version"><br><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/RCacheAside.png" alt="Right version"></li>
+</ul>
+<ol start="2">
+<li><p><em>為什麼寫策略是<strong>刪除快取</strong>不是<strong>更新快取</strong>？</em></p>
+<p> 更新快取 這個行為相較刪除快取來的更耗效能（此處耗的是快取server），簡單舉例：一篇包含標題、內文、點讚數、留言數等等的文章快取，當多一個用戶留言或按讚時，實際上改變的資料只是一小部分，但為了做到更新快取那就需要將整筆資料query出來也就是額外的I&#x2F;O消耗，反之刪除快取就不會有這額外的負擔。</p>
+<p> 這就是Cache Aside的特色，不用管那麼多也因此減輕了cache的壓力，不需每次資料一變動就要跑進資料庫拿又存進快取這樣的動作，但當然Trade off就是前面所提到的缺點。</p>
 </li>
 </ol>
-<h2 id="那到底誰適合寫多讀少的情境呢？"><a href="#那到底誰適合寫多讀少的情境呢？" class="headerlink" title="那到底誰適合寫多讀少的情境呢？"></a>那到底誰適合寫多讀少的情境呢？</h2><h3 id="Ans：Write-behind-Cache"><a href="#Ans：Write-behind-Cache" class="headerlink" title="Ans：Write behind Cache"></a>Ans：Write behind Cache</h3><p>Write behind Cache最大的差別就在於將緩存寫入資料庫的<strong>時機點</strong>不再像Write Through是同步的機制而是以異步的方式將緩存更新至資料庫，簡單來說就是，隔了一些時間再批量將緩存的資料存入資料庫（更白話就是改天在一起進資料庫啦），且是異步執行所以不會阻塞程式運作</p>
-<p><strong><em>應用情境：</em></strong><br>寫多讀少、電商的購物車</p>
-<p><strong><em>優點：</em></strong><br>極大減輕資料庫壓力，尤其在<strong>高併發</strong>的情况下（因為數據庫更新是異步而非像Write-Tgrough是同步）也因此購物車中能有很快的響應時間因為大多數操作都在快取中完成。</p>
-<p><strong><em>缺點：</em></strong><br>因為在存入資料庫前的時間都是存在Cache，所以如果發生意外你的PC裂開了，你也裂開了</p>
+<hr>
+<h2 id="Read-Write-Through"><a href="#Read-Write-Through" class="headerlink" title="Read&#x2F;Write Through"></a>Read&#x2F;Write Through</h2><p>概念上最主要的差異在於Write Through，此策略需要開發人員在<strong>快取層</strong>自行設計一套事務機制來確保快取和DB之間的數據一致性，因為應用程式(Application layer)不再會直接與資料庫溝通，轉而透過快取層做代理（可以看以下附圖更好理解）。在實作難度上也是差異頗大。</p>
+<p><strong><em>應用情境：</em></strong></p>
+<ul>
+<li>也不適合在寫多讀少，但相對cache aside來得更適合些@@</li>
+<li>適合於金融相關的應用程式中使用（高資料一致性）</li>
+</ul>
+<p><strong><em>優點：</em></strong><br>在提供<strong>資料一致性</strong>方面比Cache aside表現得更好</p>
+<p><strong><em>缺點：</em></strong></p>
+<ul>
+<li>不易實現</li>
+<li>寫入性能相對較低（寫入延遲）</li>
+<li>快取伺服器負載大（每一個寫入都要排隊—&gt;同步）</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/readwrite.png" alt="notification"></p>
+<hr>
+<h2 id="對cache-aside-Read-Write-Through的小整理："><a href="#對cache-aside-Read-Write-Through的小整理：" class="headerlink" title="對cache aside&#x2F;Read&#x2F;Write Through的小整理："></a>對cache aside&#x2F;Read&#x2F;Write Through的小整理：</h2><ol>
+<li><p>遇到<strong>寫入併發</strong>時，cache aside是依賴資料庫本身的事務管理機制去解決 而Read&#x2F;Write Through策略下則是要開發人員在快取層中自行設計一套事務管理邏輯來處理</p>
+</li>
+<li><p>Read&#x2F;Write Through相較於cache aside最大的優點就是讓資料庫與快取資料差異減少，不會像cache aside雖然資料庫都是最新的資料但快取必須要等待下一次read才會更新至最新</p>
+</li>
+<li><p>Read&#x2F;Write Through 中cache作為應用程式與資料庫之間的管理者（自動化）而非像cache aside中cache只是單純作為一個存快取資料的容器</p>
+</li>
+</ol>
+<hr>
+<h2 id="那到底誰適合寫多讀少的情境呢？"><a href="#那到底誰適合寫多讀少的情境呢？" class="headerlink" title="那到底誰適合寫多讀少的情境呢？"></a>那到底誰適合寫多讀少的情境呢？</h2><h3 id="Ans：Write-behind-Cache"><a href="#Ans：Write-behind-Cache" class="headerlink" title="Ans：Write behind Cache"></a>Ans：Write behind Cache</h3><p>Write behind Cache最大的差別就在於將快取寫入資料庫的<strong>時機點</strong>不再像Write Through是同步的機制而是以非同步的方式將快取更新至資料庫，簡單來說就是，隔了一些時間再批量將緩存的資料存入資料庫（更白話就是改天在一起進資料庫啦），且是異步執行所以不會阻塞程式運作</p>
+<p><strong><em>應用情境：</em></strong></p>
+<ul>
+<li>寫多讀少</li>
+<li>電商的購物車</li>
+<li>OS (Redis似乎並沒有提供此策略實作方法似乎都是被運用於OS設計中)</li>
+</ul>
+<p><strong><em>優點：</em></strong><br>極大減輕資料庫壓力，尤其在<strong>高併發</strong>的情况下（因為數據庫更新是異步而非像Write-Tgrough是同步）</p>
+<p><strong><em>缺點：</em></strong><br>因為在存入資料庫前的時間都是存在Cache，所以如果發生意外你的PC裂開了，你也裂開了（資料丟失風險）</p>
 <p><img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/behind.png" alt="notification"></p>
+<hr>
+<h2 id="Other-issue"><a href="#Other-issue" class="headerlink" title="Other issue"></a>Other issue</h2><p><strong><em>Cache avalanche</em></strong><br>快取過期時間設置一致，導致時間一到同時全部失效，全都要進DB重拿，資料庫壓力突然喜馬拉雅山大</p>
+<ul>
+<li><code>以隨機值當來當作 Expire time</code></li>
+</ul>
+<p><strong><em>Cache breakdown</em></strong><br>某熱門快取非常巧合的過期了，在還未更新前一坨請求進來導致沒必要的瘋狂更新、查詢</p>
+<ul>
+<li><code>保證只有一個線程可以去更新緩存，其他線程則等待</code></li>
+<li><code>刻意設置為永久，cache滿了再透過比如message queue的方式去觸發清除的行為</code></li>
+</ul>
+<p><strong><em>Hotspot cache</em></strong><br>熱點的數據導致cache撐不住(熱門到一台server不夠撐)</p>
+<ul>
+<li><code>運用load balance的概念去分散壓力</code></li>
+</ul>
+<p><strong>THANKS WATCHING</strong></p>
 
         
       </div>
@@ -415,10 +487,15 @@
   
     
 <nav id="article-nav">
-  <a class="article-nav-btn left  disabled "
+  <a class="article-nav-btn left "
+    
+      href="/2024/01/21/2024-1-20-inklinker/"
+      title="InkLinker (Blog platform)"
      >
     <i class="fa-solid fa-angle-left"></i>
     <p class="title-text">
+      
+        InkLinker (Blog platform)
         
     </p>
   </a>
@@ -453,7 +530,7 @@
   <div id="footer-info" class="inner">
     
     &copy; 2024 劉威廷<br>
-    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+    <!-- Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a> -->
   </div>
 </footer>
 
