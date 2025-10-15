@@ -27,9 +27,9 @@
 <meta property="og:site_name" content="Wei-Ting&#39;s Blog">
 <meta property="og:description" content="前言這篇想跟大家分享自己人生中第一個開源貢獻專案、應該會是 2025 最大的里程碑：@waitingliou&#x2F;tsc-otel-instrumentation。 這是一個面向開發者（特別 for SRE）的 npm 開源套件，他讓你能夠以無侵入式、Zero runtime overhead 的方式，幫助你 tracing 你的 TypeScript 專案中的核心商業邏輯，輕易的提升你的">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2025/10/15/2025-10-15-otel-open-source/images/otel/logo.png">
+<meta property="og:image" content="http://example.com/2025/10/15/2025-10-15-otel-open-source/images/otel/image.png">
 <meta property="article:published_time" content="2025-10-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-15T07:48:04.078Z">
+<meta property="article:modified_time" content="2025-10-15T08:04:48.265Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Obserability">
 <meta property="article:tag" content="OpenTelemetry">
@@ -37,7 +37,7 @@
 <meta property="article:tag" content="TypeScript Compiler">
 <meta property="article:tag" content="Npm package">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2025/10/15/2025-10-15-otel-open-source/images/otel/logo.png">
+<meta name="twitter:image" content="http://example.com/2025/10/15/2025-10-15-otel-open-source/images/otel/image.png">
   
     <link rel="alternate" href="/atom.xml" title="Wei-Ting's Blog" type="application/atom+xml">
   
@@ -370,7 +370,7 @@
   <div class="article-gallery-photos">
     
       <a class="article-gallery-img" rel="gallery_cmgronm870000wwf29xtn6yyj">
-        <img src="/images/otel/logo.png" itemprop="image">
+        <img src="/images/otel/image.png" itemprop="image">
       </a>
     
   </div>
@@ -405,7 +405,7 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            5k words 
+            5.2k words 
           </div>
         </div>
         
@@ -422,7 +422,8 @@
 <p>在介紹更多過程之前，先致謝跟廣告 <a target="_blank" rel="noopener" href="https://pathors.com/">Pathors</a>，Pathors 是間賊有潛力的 AI agent 新創，最近已經在積極擴展台灣的市場，歡迎有興趣的公司找 <a target="_blank" rel="noopener" href="https://github.com/YJack0000">Y.J</a>, <a target="_blank" rel="noopener" href="https://github.com/Lanznx">Brandon</a> 洽談！</p>
 <p>我覺得我很幸運能有機會為一個客戶已經跨到美國的產品導入 OpenTelemetry，其中成就感頂峰就是在 demo 這個 package 給 Pathors 公司裡傳奇大神學長姊時他們的反應以及他們給出的肯定，也因為這樣有了些自信，想了想或許可以弄完整些開源出去幫助需要的團隊做到更優雅的 tracing 🚀</p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>那 @waitingliou&#x2F;tsc-otel-instrumentation 的特色是什麼？對你有用處嗎？</strong><br><img src="/images/otel/arc.png" alt="arc"></p>
-<p>如果你的團隊或公司在導入 OpenTelemetry 的過程中不只是想要 System level Instrumentation（ex: HTTP, DB, network, other third library…etc），也想要 Instrument 自己內部 TypeScript project 中的某些核心商業邏輯，比如： Clean Architecture 用於處理核心商業邏輯的 usecase layer 中的 <code>**/*Service.ts</code>, 又或是 Infra layer 中的 <code>**/*Repository.ts</code> 特定檔案，<br>而同時，一方面你不想要你的 codebase 到處都是 tracing code like 下方示意程式碼，一方面也不希望 tracing 造成額外的 runtime overhead。</p>
+<p>如果你的團隊或公司在導入 OpenTelemetry 的過程中，不只是想要 System level Instrumentation（ex: HTTP, DB, network, other third library…etc），<br>也想要 Instrument 自己內部 TypeScript project 中的某些核心商業邏輯，<br>比如： Clean Architecture 用於處理核心商業邏輯的 usecase layer 中的 <code>**/*Service.ts</code>, 又或是 Infra layer 中的 <code>**/*Repository.ts</code> 特定檔案</p>
+<p>而同時，一方面你不想要你的 codebase 到處都是 tracing code like 下方示意程式碼，一方面也不希望 tracing 造成額外的 runtime overhead。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">signup</span>(<span class="params">name, email</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">await</span> tracer.<span class="title function_">startActiveSpan</span>(<span class="string">&quot;Demo.UserService.signup&quot;</span>, &#123;</span><br><span class="line">            <span class="attr">kind</span>: <span class="title class_">SpanKind</span>.<span class="property">INTERNAL</span>,</span><br><span class="line">            <span class="attr">attributes</span>: &#123;</span><br><span class="line">                <span class="string">&quot;code.function&quot;</span>: <span class="string">&quot;signup&quot;</span>,</span><br><span class="line">                <span class="string">&quot;code.namespace&quot;</span>: <span class="string">&quot;UserService&quot;</span>,</span><br><span class="line">                <span class="string">&quot;otel.library.name&quot;</span>: <span class="string">&quot;@waitingliou/tsc-otel-instrumentation&quot;</span>,</span><br><span class="line">                <span class="string">&quot;otel.library.version&quot;</span>: <span class="string">&quot;1.0.0&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="keyword">async</span> (span) =&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// ...your business logic</span></span><br><span class="line">                span.<span class="title function_">setStatus</span>(&#123; <span class="attr">code</span>: <span class="title class_">SpanStatusCode</span>.<span class="property">OK</span> &#125;);</span><br><span class="line">                <span class="keyword">return</span> ...;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">                span.<span class="title function_">recordException</span>(error);</span><br><span class="line">                span.<span class="title function_">setStatus</span>(&#123; <span class="attr">code</span>: <span class="title class_">SpanStatusCode</span>.<span class="property">ERROR</span> &#125;);</span><br><span class="line">                <span class="keyword">throw</span> error;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">finally</span> &#123;</span><br><span class="line">                span.<span class="title function_">end</span>();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 
 <p>那 <strong>@waitingliou&#x2F;tsc-otel-instrumentation</strong> 這個 npm package 就能夠徹底解決你的需求。他的特色在於:</p>
@@ -441,6 +442,8 @@
 <p>看到這你應該會有個疑問：這個 package 是在 Compile time 做 Instrumentation，那對 Compile time 的 overhead 影響程度多大？</p>
 <p>我將 Pathors 內部核心 package 作為實驗目標（其 .ts 總行數是 <strong>9,971</strong>），經過多次量測取平均得出 <strong>Memory 僅增加不到 100MB、Compile time 增加 0.4s。</strong></p>
 <p><img src="/images/otel/bm.png" alt="bm"><br>不過這個變因有點多，僅供參考。</p>
+<h2 id="Usage-Example"><a href="#Usage-Example" class="headerlink" title="Usage Example"></a>Usage Example</h2><p>另外，我建立了一個完整的範例專案幫助你能更清楚了解該如何導入 OTel 以及 @waitingliou&#x2F;tsc-otel-instrumentation，這個範例專案將 Grafana Cloud Loki, Tempo 作為 tracing backend（如開頭的影片），並分別提供 Node.js + Express.js、Bun + Hono.js 兩者常見 Web application 在導入 OTel 的實務場景。</p>
+<p><img src="/images/otel/exm.png" alt="exm"></p>
 <h2 id="Idea-Process"><a href="#Idea-Process" class="headerlink" title="Idea Process"></a>Idea Process</h2><p>這個 Package 前前後後約一個月誕生，idea 是出自於我在 Pathors 實習的過程，隨著 Pathors 系統越做越大，除錯的過程變得越加複雜，所需要的時間成本越拉越長，某服務變慢也很難找出其中的 bottleneck。原先只靠 Loki log 來除錯變得逐漸雞肋，於是我開始專注在如何幫助 Pathors 提升 System Observability。</p>
 <p>一開始的需求其實很簡單：<strong>Execution context propagation</strong></p>
 <ul>
