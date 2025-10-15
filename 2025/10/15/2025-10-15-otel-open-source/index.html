@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="false" > 
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+
+  
+  <title>Den&#39;s Opentelemetry 開源貢獻分享 | Wei-Ting&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="前言這篇想跟大家分享自己人生中第一個開源貢獻專案、應該會是 2025 最大的里程碑：@waitingliou&#x2F;tsc-otel-instrumentation。 這是一個面向開發者（特別 for SRE）的 npm 開源套件，他讓你能夠以無侵入式、Zero runtime overhead 的方式，幫助你 tracing 你的 TypeScript 專案中的核心商業邏輯，輕易的提升你的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Den&#39;s Opentelemetry 開源貢獻分享">
+<meta property="og:url" content="http://example.com/2025/10/15/2025-10-15-otel-open-source/index.html">
+<meta property="og:site_name" content="Wei-Ting&#39;s Blog">
+<meta property="og:description" content="前言這篇想跟大家分享自己人生中第一個開源貢獻專案、應該會是 2025 最大的里程碑：@waitingliou&#x2F;tsc-otel-instrumentation。 這是一個面向開發者（特別 for SRE）的 npm 開源套件，他讓你能夠以無侵入式、Zero runtime overhead 的方式，幫助你 tracing 你的 TypeScript 專案中的核心商業邏輯，輕易的提升你的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/rabbit.png">
+<meta property="article:published_time" content="2025-10-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-15T07:41:47.660Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Obserability">
+<meta property="article:tag" content="OpenTelemetry">
+<meta property="article:tag" content="Open Source Contribution">
+<meta property="article:tag" content="TypeScript Compiler">
+<meta property="article:tag" content="Npm package">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/rabbit.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Wei-Ting's Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-192.png" sizes="192x192">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-192.png" sizes="192x192">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+  
+     
+<div class="widget color-picker">
+  <h3 class="widget-title">Theme Preview</h3>
+  <div id="banner-toggle-bar">
+    <label for="vehicle1">Show Banner</label><br>
+    <input type="checkbox" id="banner-checkbox" name="banner-checkbox" value="show">
+  </div>
+
+  <div id="preset-list">
+    
+      <div class="preset-btn" style="background-color: #f486aa;" data-hue="0"></div>
+    
+      <div class="preset-btn" style="background-color: #fa8978;" data-hue="30"></div>
+    
+      <div class="preset-btn" style="background-color: #ee9748;" data-hue="60"></div>
+    
+      <div class="preset-btn" style="background-color: #00cab1;" data-hue="180"></div>
+    
+      <div class="preset-btn" style="background-color: #63b3ff;" data-hue="250"></div>
+    
+      <div class="preset-btn" style="background-color: #8ca8ff;" data-hue="270"></div>
+    
+      <div class="preset-btn" style="background-color: #bc98f9;" data-hue="300"></div>
+    
+      <div class="preset-btn" style="background-color: #df8cd8;" data-hue="330"></div>
+    
+      <div class="preset-btn" style="background-color: #ec88c2;" data-hue="345"></div>
+     
+  </div>
+  <input type="range" min="0" max="360" value="250" class="slider" id="colorSlider" step="5" style="width: 100%;">
+  <p class="hue-text">Hue: <span id="hueValue"></span></p>
+  <p class="oklch-tip">You are using an outdated browser that does not support OKLCH colors. The color setting will not take effect.</p>
+</div>
+
+<script>
+  let slider = document.getElementById("colorSlider");
+  let output = document.getElementById("hueValue");
+  let presetList = document.getElementById("preset-list");
+  let r = document.querySelector(':root');
+  output.innerHTML = slider.value; // Display the default slider value
+
+  function getColorNode(l, c, h) {
+    return new Color("oklch", [l, c, h]).to("srgb").toString({format: "hex"});
+  }
+  function setHue(hue) {
+    localStorage.setItem('hue', hue);
+    output.innerHTML = hue;
+    slider.value = hue;
+
+    r.style.setProperty(`--primary-hue`, hue);
+  }
+
+  let storedHue = localStorage.getItem('hue');
+  if (storedHue) {
+    setHue(storedHue);
+  }
+
+  slider.oninput = function() {
+    output.innerHTML = this.value;
+    let hue = this.value;
+    setHue(hue);
+  }
+
+  presetList.onclick = function(event) {
+    let hue = event.target.dataset.hue;
+    if (hue) {
+      setHue(hue);
+    }
+  }
+
+  // Banner switch
+
+  function enableBanner() {
+    r.setAttribute("showBanner", "true");
+    localStorage.setItem('showBanner', "true");
+  }
+  
+  function disableBanner() {
+    r.setAttribute("showBanner", "false");
+    localStorage.setItem('showBanner', "false");
+  }
+
+  let showBannerCheck = document.querySelector("input[name=banner-checkbox]");
+  if (r.getAttribute("showBanner") === "true") {
+    showBannerCheck.checked = true;
+  }
+  showBannerCheck.addEventListener('change', function() {
+    if (this.checked) {
+      enableBanner();
+    } else {
+      disableBanner();
+    }
+  });
+</script>
+  
+  
+   
+  <div id="main-grid" class="  ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>Wei-Ting's Blog </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/atom.xml" title="RSS Feed">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M198-120q-25.846 0-44.23-18.384-18.384-18.385-18.384-44.23 0-25.846 18.384-44.23 18.384-18.385 44.23-18.385 25.846 0 44.23 18.385 18.384 18.384 18.384 44.23 0 25.845-18.384 44.23Q223.846-120 198-120Zm538.385 0q-18.846 0-32.923-13.769-14.076-13.769-15.922-33.23-8.692-100.616-51.077-188.654-42.385-88.039-109.885-155.539-67.5-67.501-155.539-109.885Q283-663.462 182.385-672.154q-19.461-1.846-33.23-16.23-13.769-14.385-13.769-33.846t14.076-32.922q14.077-13.461 32.923-12.23 120.076 8.692 226.038 58.768 105.961 50.077 185.73 129.846 79.769 79.769 129.846 185.731 50.077 105.961 58.769 226.038 1.231 18.846-12.538 32.922Q756.461-120 736.385-120Zm-252 0q-18.231 0-32.423-13.461t-18.653-33.538Q418.155-264.23 348.886-333.5q-69.27-69.27-166.501-84.423-20.077-4.462-33.538-18.961-13.461-14.5-13.461-33.346 0-19.076 13.884-33.23 13.884-14.153 33.115-10.922 136.769 15.384 234.384 112.999 97.615 97.615 112.999 234.384 3.231 19.23-10.538 33.115Q505.461-120 484.385-120Z"/></svg>
+      </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+    
+      <a class="nav-dropdown-link" href="/atom.xml" title="RSS Feed">RSS</a>
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=/images/me.jpg></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">劉威廷 </div>
+      <div class="dot"></div>
+      <div class="subtitle">努力活著ing！很喜歡的一句話：不是因為你很厲害才能去做 而是去做了才能很厲害 </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://www.instagram.com/coding_den_/?igsh=YTQwZjQ0NmI0OA%3D%3D&utm_source=qr" title="Instagram"><i class="fa-brands fa-square-instagram"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://www.linkedin.com/in/weiting-liou-91552b274/" title="Linkedln"><i class="fa-brands fa-linkedin"></i></a>
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/Lu-weiting" title="GitHub"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Categories</h3>
+      <div class="category-box">
+            <a class="category-link" href="/categories/side-project/">
+                side project
+                <div class="category-count">3</div>
+            </a>
+        
+            <a class="category-link" href="/categories/learning-note/">
+                learning note
+                <div class="category-count">3</div>
+            </a>
+        
+            <a class="category-link" href="/categories/open-source-contribution/">
+                open source contribution
+                <div class="category-count">1</div>
+            </a>
+        </div>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Tags</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/AppWorks-School/" rel="tag">AppWorks School</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Npm-package/" rel="tag">Npm package</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Obserability/" rel="tag">Obserability</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Open-Source-Contribution/" rel="tag">Open Source Contribution</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/OpenTelemetry/" rel="tag">OpenTelemetry</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Scrum/" rel="tag">Scrum</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/TypeScript-Compiler/" rel="tag">TypeScript Compiler</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/backend/" rel="tag">backend</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/cache/" rel="tag">cache</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/full-stack/" rel="tag">full stack</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/side-project/" rel="tag">side project</a></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Archives</h3>
+      
+      
+        <a class="archive-link" href="/archives/2025/10 ">
+          October 2025 
+          <div class="archive-count">1 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2024/11 ">
+          November 2024 
+          <div class="archive-count">1 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2024/01 ">
+          January 2024 
+          <div class="archive-count">1 </div>
+        </a>
+      
+        <a class="archive-link" href="/archives/2023/09 ">
+          September 2023 
+          <div class="archive-count">4 </div>
+        </a>
+      
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Recent Posts</h3>
+      <ul>
+        
+          <a class="recent-link" href="/2025/10/15/2025-10-15-otel-open-source/" title="Den's Opentelemetry 開源貢獻分享" >
+            <div class="recent-link-text">
+              Den&#39;s Opentelemetry 開源貢獻分享
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2024/11/24/2024-10-16-jsAsync/" title="一起來深入摸摸 JS 非同步原理" >
+            <div class="recent-link-text">
+              一起來深入摸摸 JS 非同步原理
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2024/01/21/2024-1-20-inklinker/" title="InkLinker (Blog platform)" >
+            <div class="recent-link-text">
+              InkLinker (Blog platform)
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/09/25/2023-9-25-cache/" title="Den's cache學習筆記" >
+            <div class="recent-link-text">
+              Den&#39;s cache學習筆記
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2023/09/14/2023-9-14-soon_solve/" title="Soon Solve" >
+            <div class="recent-link-text">
+              Soon Solve
+            </div>
+          </a>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+
+<article id="post-2025-10-15-otel-open-source" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img" rel="gallery_cmgronm870000wwf29xtn6yyj">
+        <img src="https://raw.githubusercontent.com/Lu-weiting/ImageRepository/master/rabbit.png" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        Den&#39;s Opentelemetry 開源貢獻分享
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2025-10-14T16:00:00.000Z" itemprop="datePublished">2025-10-15</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/open-source-contribution/">open source contribution</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            5k words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Npm-package/" rel="tag">Npm package</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Obserability/" rel="tag">Obserability</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Open-Source-Contribution/" rel="tag">Open Source Contribution</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenTelemetry/" rel="tag">OpenTelemetry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript-Compiler/" rel="tag">TypeScript Compiler</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <p><img src="/images/otel/demo.gif" alt="pr"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這篇想跟大家分享自己人生中第一個<strong>開源貢獻專案</strong>、應該會是 2025 最大的里程碑：<a target="_blank" rel="noopener" href="https://github.com/CeranaStudio/tsc-opentelemetry-instrumentation">@waitingliou&#x2F;tsc-otel-instrumentation</a>。</p>
+<p>這是一個面向開發者（特別 for SRE）的 npm 開源套件，他讓你能夠以<strong>無侵入式、Zero runtime overhead</strong> 的方式，幫助你 tracing 你的 TypeScript 專案中的核心商業邏輯，輕易的提升你的系統 Observability，給予開發維運者更多的 Insights，讓找出系統 Bugs, Bottleneck 的效率大大提升。</p>
+<p>目前 <strong>@waitingliou&#x2F;tsc-otel-instrumentation</strong> 已經成功被收錄在 <strong>Opentelemetry Community Ecosystem</strong> 之中！PR 還被社群裡<strong>首要貢獻者 Chalin</strong> 給了有趣的回饋，開心到原地起飛💥<br><img src="/images/otel/pr.png" alt="pr"></p>
+<p>現在也已經可以在官方 <a target="_blank" rel="noopener" href="https://opentelemetry.io/ecosystem/registry/?language=js&component=instrumentation&s=tsc">Registry</a> 搜尋的到了：<br><img src="/images/otel/reg.png" alt="pr"></p>
+<p>在介紹更多過程之前，先致謝跟廣告 <a target="_blank" rel="noopener" href="https://pathors.com/">Pathors</a>，Pathors 是間賊有潛力的 AI agent 新創，最近已經在積極擴展台灣的市場，歡迎有興趣的公司找 <a target="_blank" rel="noopener" href="https://github.com/YJack0000">Y.J</a>, <a target="_blank" rel="noopener" href="https://github.com/Lanznx">Brandon</a> 洽談！</p>
+<p>我覺得我很幸運能有機會為一個客戶已經跨到美國的產品導入 OpenTelemetry，其中成就感頂峰就是在 demo 這個 package 給 Pathors 公司裡傳奇大神學長姊時他們的反應以及他們給出的肯定，也因為這樣有了些自信，想了想或許可以弄完整些開源出去幫助需要的團隊做到更優雅的 tracing 🚀</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>那 @waitingliou&#x2F;tsc-otel-instrumentation 的特色是什麼？對你有用處嗎？<br><img src="/images/otel/arc.png" alt="arc"></p>
+<p>如果你的團隊或公司在導入 OpenTelemetry 的過程中不只是想要 System level Instrumentation（ex: HTTP, DB, network, other third library…etc），也想要 Instrument 自己內部 TypeScript project 中的某些核心商業邏輯，比如： Clean Architecture 用於處理核心商業邏輯的 usecase layer 中的 **&#x2F;*Service.ts, 又或是 Infra layer 中的 **&#x2F;*Repository.ts 特定檔案，<br>而同時，一方面你不想要你的 codebase 到處都是 tracing code like 下方示意程式碼，一方面也不希望 tracing 造成額外的 runtime overhead。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">signup</span>(<span class="params">name, email</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">await</span> tracer.<span class="title function_">startActiveSpan</span>(<span class="string">&quot;Demo.UserService.signup&quot;</span>, &#123;</span><br><span class="line">            <span class="attr">kind</span>: <span class="title class_">SpanKind</span>.<span class="property">INTERNAL</span>,</span><br><span class="line">            <span class="attr">attributes</span>: &#123;</span><br><span class="line">                <span class="string">&quot;code.function&quot;</span>: <span class="string">&quot;signup&quot;</span>,</span><br><span class="line">                <span class="string">&quot;code.namespace&quot;</span>: <span class="string">&quot;UserService&quot;</span>,</span><br><span class="line">                <span class="string">&quot;otel.library.name&quot;</span>: <span class="string">&quot;@waitingliou/tsc-otel-instrumentation&quot;</span>,</span><br><span class="line">                <span class="string">&quot;otel.library.version&quot;</span>: <span class="string">&quot;1.0.0&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="keyword">async</span> (span) =&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// ...your business logic</span></span><br><span class="line">                span.<span class="title function_">setStatus</span>(&#123; <span class="attr">code</span>: <span class="title class_">SpanStatusCode</span>.<span class="property">OK</span> &#125;);</span><br><span class="line">                <span class="keyword">return</span> ...;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">                span.<span class="title function_">recordException</span>(error);</span><br><span class="line">                span.<span class="title function_">setStatus</span>(&#123; <span class="attr">code</span>: <span class="title class_">SpanStatusCode</span>.<span class="property">ERROR</span> &#125;);</span><br><span class="line">                <span class="keyword">throw</span> error;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">finally</span> &#123;</span><br><span class="line">                span.<span class="title function_">end</span>();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>那 <strong>@waitingliou&#x2F;tsc-otel-instrumentation</strong> 這個 npm package 就能夠徹底解決你的需求。他的特色在於:</p>
+<ol>
+<li><strong>Compile-time instrumentation</strong>：你的系統在 instrumentation 的行為上不會有任何的 runtime overhead</li>
+<li><strong>Application-level transparency</strong>：開發者在 codebase 中完全不會意識、觸摸到 tracing code</li>
+</ol>
+<p>Google 在 2010年發布的 papper: <strong>Dapper, a Large-Scale Distributed Systems Tracing Infrastructure</strong> 之中也有提到在導入任何 Tracing 進到系統時的原則 Best Practice 應該要為：</p>
+<blockquote>
+<ul>
+<li>the tracing system should have negligible performance impact on running services.</li>
+<li>programmers should not need to be aware of the tracing system</li>
+</ul>
+</blockquote>
+<p>而現有的 <strong>Instrumentation Library</strong> 大多都是針對第三方 library 進行 Instrument，尚未提供一個可以針對特定檔案, 特定 function 做自動化 Instrument 的工具，加上這些 Instrumentation Library 都是透過 <strong>runtime</strong> 時去介入、Override 第三方 library 的載入再加上 tracing code 的方法（也就是所謂的 <strong>Monkey-patching</strong>）。</p>
+<p>看到這你應該會有個疑問：這個 package 是在 Compile time 做 Instrumentation，那對 Compile time 的 overhead 影響程度多大？</p>
+<p>我將 Pathors 內部核心 package 作為實驗目標（其 .ts 總行數是 <strong>9,971</strong>），經過多次量測取平均得出 <strong>Memory 僅增加不到 100MB、Compile time 增加 0.4s。</strong></p>
+<p><img src="/images/otel/bm.png" alt="bm"><br>不過這個變因有點多，僅供參考。</p>
+<h2 id="Idea-Process"><a href="#Idea-Process" class="headerlink" title="Idea Process"></a>Idea Process</h2><p>這個 Package 前前後後約一個月誕生，idea 是出自於我在 Pathors 實習的過程，隨著 Pathors 系統越做越大，除錯的過程變得越加複雜，所需要的時間成本越拉越長，某服務變慢也很難找出其中的 bottleneck。原先只靠 Loki log 來除錯變得逐漸雞肋，於是我開始專注在如何幫助 Pathors 提升 System Observability。</p>
+<p>一開始的需求其實很簡單：<strong>Execution context propagation</strong></p>
+<ul>
+<li>想要將 application level 的資訊（ex: request id…etc）帶入到內層如 infra layer 方便進行錯誤 Debug，但同時又不希望從上層一直propagate context 導致 infra 產生耦合</li>
+</ul>
+<p>下面這一段是分享為了解決這個需求，一路上的過程，從 <strong>AsyncLocalStorage 到 Opentelemetry 最後到 @waitingliou&#x2F;tsc-otel-instrumentation</strong>。</p>
+<h3 id="AsyncLocalStorage"><a href="#AsyncLocalStorage" class="headerlink" title="AsyncLocalStorage"></a>AsyncLocalStorage</h3><p>第一個階段是決定導入 AsyncLocalStorage，但這解法挺糟的，除了要考量到未來是否會有潛在 memory leak 風險外，因為這時的 Pathors 主要應用是用 Next.js 建置的，而 Next.js middleware 運行在不同於 Node.js 的 Edge runtime，導致需要額外寫 Wrapper 將 AsyncLocalStorage 的邏輯包住每個 API route, Server action 而這就導致 duplicated code 賊醜。</p>
+<p>下面是當初小研究 AsyncLocalStorage 的紀錄供參：<br><a target="_blank" rel="noopener" href="https://hip-people-3a4.notion.site/AsyncLocalStorage-24ff9b862c4680109379d2268f946cf3">https://hip-people-3a4.notion.site/AsyncLocalStorage-24ff9b862c4680109379d2268f946cf3</a></p>
+<p>還有一個滿有趣的點是，在實作好 AsyncLocalStorage 後我用 K6 以 constant-vus 模式 20 vus 打下去，雖然 throughput, latency 有大概 2.6% 的 penalty，但其實 memory 根本沒什麼差。</p>
+<p>但光是要用 Wrapper 在 codebase 到處包就是個糟糕的解法了，而後來發現 <strong>Opentelemetry</strong> 其實就能夠完美標準化的解決 execution context propagation 的需求、也可以為後續打好強力的監控基礎。</p>
+<p>然而，在引入 <strong>Opentelemetry</strong>  的過程中發現想要針對專案內部的某些檔案或模組進行 Instrument 時，只能手動將生成 span 的程式碼去包住目標才行，而這就又回到了 AsyncLocalStorage 的最大癥結點 Wrapper -&gt; duplicated code。</p>
+<p>於是就出現了下一個解法：</p>
+<h3 id="用-Proxy-截斷-function-call-在其中-Instrument"><a href="#用-Proxy-截斷-function-call-在其中-Instrument" class="headerlink" title="用 Proxy 截斷 function call 在其中 Instrument"></a>用 Proxy 截斷 function call 在其中 Instrument</h3><p>他的概念是讓每一個被 Proxy 包住的物件，其任何 function call 都會額外經過一層，這一層做的事情就是 Instrument。這樣做的好處是，往往一個漂亮的專案都會利用 Dependency Injection 管理各種物件初始化，那 Proxy 就只需要在某個固定檔案的某個固定地方加上即可，開發者在開發的過程大部分時間不會碰觸到 tracing code，也算是某種 application-level transparency（但透明度可能算60% xd），不過，缺點也很明顯：runtime overhead</p>
+<p>當時，我在向 Pathors 大 Boss（以下簡稱 Y.J大神學長） 提出這個解法後，Y.J 大神學長的回饋是這個做法雖然說不完美但堪用，不過同時，Y.J 大神學長也提出了一個好奇點，而這個好奇點造就了 @waitingliou&#x2F;tsc-otel-instrumentation 的誕生！（偷偷再次感謝Y.J 大神學長）<br>：有沒有可能可以像其他 Instrumentation Library 一樣<strong>完全不需要有額外的 tracing code 在 codebase</strong> 中就能做到 Instrumentation？</p>
+<h2 id="waitingliou-tsc-otel-instrumentation-的誕生"><a href="#waitingliou-tsc-otel-instrumentation-的誕生" class="headerlink" title="@waitingliou&#x2F;tsc-otel-instrumentation 的誕生"></a>@waitingliou&#x2F;tsc-otel-instrumentation 的誕生</h2><p>為了達到「完全不需要有額外的 tracing code 在 codebase 中就能做到 Instrumentation」，於是有了：誒 TS 誒，那就從 Compile 階段下手吧的想法。</p>
+<p>平常對於 TS Compiler 的知識只停留在它會幫忙把 TS 轉成 JS，那他怎麼轉的？<br>其實 TS Compiler 會將我們的 TS file 轉換成一顆 AST tree，每一個 TS file 都是由標準化的結構組成的 AST tree（可以參考附圖），你也可以自己到 <a target="_blank" rel="noopener" href="https://ts-ast-viewer.com/#code/GYVwdgxgLglg9mABACwKYBt10QCgJSIDeAUImYhAgM5zqoB0WA5jgOQDucATugCat4A3MQC+QA">TypeScript AST Viewer</a> 玩玩看。</p>
+<p><img src="/images/otel/ast.png" alt="ast"></p>
+<p>看到這裡你應該多少知道 @waitingliou&#x2F;tsc-otel-instrumentation 做了啥吧！其實邏輯很簡單，就是在編譯的過程針對那些你想要的 TS file 做 traversal，在 traversal 的過程對目標 function call 加上生成 span 的邏輯也就是 instrumentation。</p>
+<p>透過這樣就能夠做到真正的 <strong>100% application-level transparency</strong>，開發人員在開發時完全不會意識到任何 tracing code，因為是在編譯時自動加上在編譯後的 js file！</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>希望這篇的分享有幫助到也想要嘗試開源貢獻的人，感謝您的閱讀！也歡迎私訊我或留言與我進行交流討論。</p>
+<p>如果您覺得這個 package 對您有所幫助，請幫幫在 <a target="_blank" rel="noopener" href="https://github.com/CeranaStudio/tsc-opentelemetry-instrumentation">GitHub</a> 上按下星星，也很歡迎 <a target="_blank" rel="noopener" href="https://buymeacoffee.com/waitingliu">pay me a coffee</a> 資助我這個有留學夢的窮學生。</p>
+<p>Happy tracing 🚀🚀</p>
+<h2 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/CeranaStudio/tsc-opentelemetry-instrumentation">GitHub</a></li>
+<li><a href="www.npmjs.com/package/@waitingliou/tsc-otel-instrumentation">@waitingliou&#x2F;tsc-otel-instrumentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://opentelemetry.io/ecosystem/registry/?language=js&component=instrumentation&s=tsc">OTel registry</a></li>
+</ul>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left  disabled "
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/2024/11/24/2024-10-16-jsAsync/"
+      title="一起來深入摸摸 JS 非同步原理"
+     >
+
+    <p class="title-text">
+      
+        一起來深入摸摸 JS 非同步原理
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2025 劉威廷<br>
+    <!-- Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a> -->
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>
